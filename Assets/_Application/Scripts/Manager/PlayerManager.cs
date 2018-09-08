@@ -47,9 +47,9 @@ public class PlayerManager : MonoBehaviour
         Current = this;
     }
 
-    public void RefleshHealth()
-    {
+    public void RefleshAll(){
         MaxHealth = MaxHealth;
         Health = MaxHealth;
+        Gold = 0;
     }
 }

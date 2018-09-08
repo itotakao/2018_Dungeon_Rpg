@@ -33,4 +33,9 @@ public class LogManager : MonoBehaviour
             LogText.text += log + "\n";
         }
     }
+
+    public void ClerText()
+    {
+        LogText.text = "";
+    }
 }

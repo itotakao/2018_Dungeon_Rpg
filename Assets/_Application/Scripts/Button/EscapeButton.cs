@@ -10,6 +10,7 @@ public class EscapeButton : MonoBehaviour {
 
     public void OnButton()
     {
+        if (GameManager.IsNextTurn) { return; }
         LogManager.Push("<color=green>逃走した</color>");
         GameManager.IsNextTurn = true;
     }

@@ -26,7 +26,8 @@ namespace Ito
 
             TitleUI.Show(true);
             GameUI.Show(false);
-            PlayerManager.RefleshHealth();
+            PlayerManager.RefleshAll();
+            LogManager.ClerText();
         }
 
         public override void OnStateExit()
