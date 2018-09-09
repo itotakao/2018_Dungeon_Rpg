@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Current { get; private set; }
 
     public bool IsNextTurn = false;
+    public bool IsContinueBattle = false;
 
     void Awake()
     {

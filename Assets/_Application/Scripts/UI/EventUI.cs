@@ -9,6 +9,7 @@ public class EventUI : MonoBehaviour
     public static EventUI Current { get; private set; }
 
     public Image EventImage = null;
+    public Text EventText = null;
     public Button BattleButton = null;
     public Button EscapeButton = null;
 

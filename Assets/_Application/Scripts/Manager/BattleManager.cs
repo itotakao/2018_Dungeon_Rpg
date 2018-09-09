@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EventManager : MonoBehaviour
+public class BattleManager : MonoBehaviour
 {
-    public static EventManager Current { get; private set; }
+    public static BattleManager Current { get; private set; }
 
+    public PlayerManager PlayerManager{ get { return PlayerManager.Current; }}
     public ItemManager ItemManager { get { return ItemManager.Current; } }
+    public LogManager LogManager { get { return LogManager.Current; } }
     public EventUI EventUI { get { return EventUI.Current; } }
 
     public delegate void PlayEnterEvent();
@@ -36,6 +38,7 @@ public class EventManager : MonoBehaviour
     public void CallRandamMonster()
     {
         CurrentMonster = GetRandamMonster();
+        CurrentMonster.Initilize();
         EventUI.EventImage.sprite = CurrentMonster.GetIcon();
         EventUI.EventText.text = CurrentMonster.GetHealth().ToString();
     }
@@ -49,5 +52,22 @@ public class EventManager : MonoBehaviour
     {
         if (monster.LotteryNormalItem()) { ItemManager.AddItem(monster.GetNormalDropItem()); }
         if (monster.LotteryRarelItem()) { ItemManager.AddItem(monster.GetRareDropItem()); }
+    }
+
+    public void Battle()
+    {
+        PlayerManager.Health -= 20;
+        LogManager.Push("<color=red>体力40ダメージ</color>");
+        PlayerManager.Gold += 30;
+        LogManager.Push("<color=green>30ゴールド獲得</color>");
+
+        CurrentMonster.Damage(PlayerManager.Attack);
+        EventUI.EventText.text = CurrentMonster.GetHealth().ToString();
+
+        if (CurrentMonster.GetHealth() <= 0)
+        {
+            LogManager.Push("<color=green>アイテムを獲得</color>");
+            LotteryDropItem(CurrentMonster);
+        }
     }
 }

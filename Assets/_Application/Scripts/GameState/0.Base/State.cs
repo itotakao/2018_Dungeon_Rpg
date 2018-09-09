@@ -17,7 +17,7 @@ namespace Ito
         public TurnManager TurnManager { get { return TurnManager.Current; } }
         public GameManager GameManager{ get { return GameManager.Current; }}
         public PlayerManager PlayerManager{ get { return PlayerManager.Current; }}
-        public EventManager EventManager{ get { return EventManager.Current; }}
+        public BattleManager BattleManager{ get { return BattleManager.Current; }}
         public LogManager LogManager{ get { return LogManager.Current; }}
 
         //enum SkipToState { None, Tutorial, Opening, Duel1, Duel2, FinalDuel, Result };
