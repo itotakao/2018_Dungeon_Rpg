@@ -18,7 +18,7 @@ public class EventManager : MonoBehaviour
     //public delegate void ButtonAction();
     //public static event ButtonAction OnButtonEvent;
 
-    public Sprite[] MonsterSpriteList;
+    public Monster[] MonsterList;
 
     void Awake()
     {
@@ -33,13 +33,11 @@ public class EventManager : MonoBehaviour
 
     public void CallRandamMonster()
     {
-        EventUI.EventImage.sprite = GetRandamMonster();
+        EventUI.EventImage.sprite = GetRandamMonster().GetIcon();
     }
 
-    public Sprite GetRandamMonster()
+    public Monster GetRandamMonster()
     {
-        return MonsterSpriteList[Random.Range(0, MonsterSpriteList.Length)];
+        return MonsterList[Random.Range(0, MonsterList.Length)];
     }
-
-
 }
