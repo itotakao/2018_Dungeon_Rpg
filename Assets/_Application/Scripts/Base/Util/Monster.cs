@@ -19,9 +19,7 @@ public class Monster : ScriptableObject
     private string monsterName;
     [SerializeField]
     private float maxHealth;
-
     private float healthCache;
-    [SerializeField]
     private float health
     { 
         get { return healthCache; }
@@ -29,6 +27,7 @@ public class Monster : ScriptableObject
         { 
             healthCache = value;
             if(healthCache > maxHealth){ healthCache = maxHealth; }
+            if (healthCache < 0) { healthCache = 0; }
         }
     }
     [SerializeField]
@@ -43,6 +42,10 @@ public class Monster : ScriptableObject
     private Item[] rareDropList;
     [SerializeField]
     private float rareDropLate;
+
+    public void Initilize(){
+        health = maxHealth;
+    }
 
     public KindOfMonster GetKindOfMonster()
     {
@@ -97,5 +100,9 @@ public class Monster : ScriptableObject
     {
         float rand = UnityEngine.Random.Range(0.0f, 100.0f);
         return rand <= rareDropLate ? true : false;
+    }
+
+    public void Damage(float value){
+        health -= value;
     }
 }

@@ -8,20 +8,13 @@ public class BattleButton : MonoBehaviour {
     public LogManager LogManager { get { return LogManager.Current; } }
     public GameManager GameManager { get { return GameManager.Current; } }
     public ItemManager ItemManager{ get { return ItemManager.Current; }}
-    public EventManager EventManager{ get { return EventManager.Current; }}
+    public BattleManager BattleManager{ get { return BattleManager.Current; }}
 
     public void OnButton()
     {
-        if (GameManager.IsNextTurn) { return; }
+        if (GameManager.IsNextTurn ) { return; }
 
-        PlayerManager.Health -= 20;
-        LogManager.Push("<color=red>体力40ダメージ</color>");
-        PlayerManager.Gold += 30;
-        LogManager.Push("<color=green>30ゴールド獲得</color>");
-
-        LogManager.Push("<color=green>アイテムを獲得</color>");
-
-        EventManager.LotteryDropItem(EventManager.CurrentMonster);
+        BattleManager.Battle();
 
         GameManager.IsNextTurn = true;
     }

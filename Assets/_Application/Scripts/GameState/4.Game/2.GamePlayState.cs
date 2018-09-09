@@ -12,8 +12,19 @@ namespace Ito
 
         State Transition()
         {
-            if (GameManager.IsNextTurn) { return new GameRefleshState(StateMachine); }
-            //if (Game.IsGameOver) { return new ResultStartState(StateMachine); }
+            if (GameManager.IsNextTurn) {
+
+                GameManager.IsNextTurn = false;
+
+                if (BattleManager.CurrentMonster.GetHealth() <= 0)
+                {
+                    return new GameRefleshState(StateMachine);
+                }
+                else // TODO:プレイヤー体力も見るように
+                {
+                    return new GamePlayState(StateMachine);
+                }
+            }
             return null;
         }
 
@@ -21,12 +32,12 @@ namespace Ito
         {
             base.OnStateEnter();
 
-            if (EventManager.OnPlayEnterEvent != null)
+            if (BattleManager.OnPlayEnterEvent != null)
             {
-                EventManager.OnPlayEnterEvent();
+                BattleManager.OnPlayEnterEvent();
             }
 
-            StartCoroutine(CoPlaying());
+            //StartCoroutine(CoPlaying());
         }
 
         IEnumerator CoPlaying(){
@@ -37,9 +48,9 @@ namespace Ito
         {
             base.OnStateExit();
 
-            if (EventManager.OnPlayExitEvent != null)
+            if (BattleManager.OnPlayExitEvent != null)
             {
-                EventManager.OnPlayExitEvent();
+                BattleManager.OnPlayExitEvent();
             }
             //BGMManager.Current.Stop();
         }

@@ -42,6 +42,9 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public float Attack = 50.0f;
+    public float Defence = 20.0f;
+
     void Awake()
     {
         Current = this;

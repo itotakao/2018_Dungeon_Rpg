@@ -367,7 +367,7 @@ GameObject:
   - component: {fileID: 24087025}
   - component: {fileID: 24087026}
   m_Layer: 0
-  m_Name: EventManager
+  m_Name: BattleManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -394,7 +394,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 24087024}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd285023382214122a5b2fce79ef59fd, type: 3}
+  m_Script: {fileID: 11500000, guid: 260d1c5a2cfb4445da4f98f8a7dd7416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MonsterList:
@@ -635,6 +635,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsNextTurn: 0
+  IsContinueBattle: 0
 --- !u!1 &196876802
 GameObject:
   m_ObjectHideFlags: 0
@@ -2539,6 +2540,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e816d51212ad4141affd3c084b4dcb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Attack: 50
+  Defence: 20
 --- !u!1 &824691081
 GameObject:
   m_ObjectHideFlags: 0

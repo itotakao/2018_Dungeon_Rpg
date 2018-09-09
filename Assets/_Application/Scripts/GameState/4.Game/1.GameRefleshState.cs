@@ -33,7 +33,7 @@ namespace Ito
             FadeManager.isFadeIn = true;
 
             // CardManager.ShuffleCard(); // 使わなくなった
-            EventManager.CallRandamMonster();
+            BattleManager.CallRandamMonster();
 
             yield return new WaitForSeconds(2);
             isFinish = true;
