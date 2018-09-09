@@ -21,8 +21,7 @@ public class BattleButton : MonoBehaviour {
 
         LogManager.Push("<color=green>アイテムを獲得</color>");
 
-        if (EventManager.CurrentMonster.LotteryNormalItem()) { ItemManager.AddItem(EventManager.CurrentMonster.GetNormalDropItem()); }
-        if (EventManager.CurrentMonster.LotteryRarelItem()) { ItemManager.AddItem(EventManager.CurrentMonster.GetRareDropItem()); }
+        EventManager.LotteryDropItem(EventManager.CurrentMonster);
 
         GameManager.IsNextTurn = true;
     }

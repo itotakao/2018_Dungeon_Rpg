@@ -6,7 +6,8 @@ public class EventManager : MonoBehaviour
 {
     public static EventManager Current { get; private set; }
 
-    public EventUI EventUI{ get { return EventUI.Current; }}
+    public ItemManager ItemManager { get { return ItemManager.Current; } }
+    public EventUI EventUI { get { return EventUI.Current; } }
 
     public delegate void PlayEnterEvent();
     public PlayEnterEvent OnPlayEnterEvent;
@@ -18,7 +19,7 @@ public class EventManager : MonoBehaviour
     //public delegate void ButtonAction();
     //public static event ButtonAction OnButtonEvent;
 
-    public Monster CurrentMonster;
+    public Monster CurrentMonster { get; private set; }
     public Monster[] MonsterList;
 
     void Awake()
@@ -41,5 +42,11 @@ public class EventManager : MonoBehaviour
     public Monster GetRandamMonster()
     {
         return MonsterList[Random.Range(0, MonsterList.Length)];
+    }
+
+    public void LotteryDropItem(Monster monster)
+    {
+        if (monster.LotteryNormalItem()) { ItemManager.AddItem(monster.GetNormalDropItem()); }
+        if (monster.LotteryRarelItem()) { ItemManager.AddItem(monster.GetRareDropItem()); }
     }
 }
