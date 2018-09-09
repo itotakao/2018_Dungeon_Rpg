@@ -397,17 +397,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd285023382214122a5b2fce79ef59fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MonsterSpriteList:
-  - {fileID: 21300000, guid: 3cee790a710ba49d2a9eefa735b9806c, type: 3}
-  - {fileID: 21300000, guid: e741f8ba1451e40da8d5205f9f428e00, type: 3}
-  - {fileID: 21300000, guid: 7f89a0e362c3b4db2b9146b2c47f8e86, type: 3}
-  - {fileID: 21300000, guid: 1e18f8b8360bf4b83b7f0313ce0179c3, type: 3}
-  - {fileID: 21300000, guid: a21358c49008244c08e436c6e26236bd, type: 3}
-  - {fileID: 21300000, guid: 15dc844dab1ce42fe9b07a6524cbbea2, type: 3}
-  - {fileID: 21300000, guid: 5ae5a11a6148346d6807ac370e572513, type: 3}
-  - {fileID: 21300000, guid: 1ec696dd449294697a658a863a0390b3, type: 3}
-  - {fileID: 21300000, guid: 6776ced34cae0452193f7e933889cf8a, type: 3}
-  - {fileID: 21300000, guid: bdfd4856a73504bb89f9d5db1ab28ace, type: 3}
+  MonsterList:
+  - {fileID: 11400000, guid: 94fec63aba4ad4528a82e5a3e51b96de, type: 2}
+  - {fileID: 11400000, guid: 317f9c3584faf45dd917b4d72226c518, type: 2}
+  - {fileID: 11400000, guid: c263791cfd159472b90d71a27af6b0d9, type: 2}
+  - {fileID: 11400000, guid: 197e889cc8b5b4c9fa075eaab85f9f2c, type: 2}
 --- !u!1 &49176721
 GameObject:
   m_ObjectHideFlags: 0
