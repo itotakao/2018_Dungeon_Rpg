@@ -19,8 +19,18 @@ public class Monster : ScriptableObject
     private string monsterName;
     [SerializeField]
     private float maxHealth;
+
+    private float healthCache;
     [SerializeField]
-    private float health;
+    private float health
+    { 
+        get { return healthCache; }
+        set 
+        { 
+            healthCache = value;
+            if(healthCache > maxHealth){ healthCache = maxHealth; }
+        }
+    }
     [SerializeField]
     private float attack;
     [SerializeField]
