@@ -8,6 +8,7 @@ public class BattleButton : MonoBehaviour {
     public LogManager LogManager { get { return LogManager.Current; } }
     public GameManager GameManager { get { return GameManager.Current; } }
     public ItemManager ItemManager{ get { return ItemManager.Current; }}
+    public EventManager EventManager{ get { return EventManager.Current; }}
 
     public void OnButton()
     {
@@ -20,8 +21,8 @@ public class BattleButton : MonoBehaviour {
 
         LogManager.Push("<color=green>アイテムを獲得</color>");
 
-        var a = Resources.Load<Item>("Prefabs/Item/Potion");
-        ItemManager.AddItem(a);
+        if (EventManager.CurrentMonster.LotteryNormalItem()) { ItemManager.AddItem(EventManager.CurrentMonster.GetNormalDropItem()); }
+        if (EventManager.CurrentMonster.LotteryRarelItem()) { ItemManager.AddItem(EventManager.CurrentMonster.GetRareDropItem()); }
 
         GameManager.IsNextTurn = true;
     }

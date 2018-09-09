@@ -18,6 +18,7 @@ public class EventManager : MonoBehaviour
     //public delegate void ButtonAction();
     //public static event ButtonAction OnButtonEvent;
 
+    public Monster CurrentMonster;
     public Monster[] MonsterList;
 
     void Awake()
@@ -33,7 +34,8 @@ public class EventManager : MonoBehaviour
 
     public void CallRandamMonster()
     {
-        EventUI.EventImage.sprite = GetRandamMonster().GetIcon();
+        CurrentMonster = GetRandamMonster();
+        EventUI.EventImage.sprite = CurrentMonster.GetIcon();
     }
 
     public Monster GetRandamMonster()
