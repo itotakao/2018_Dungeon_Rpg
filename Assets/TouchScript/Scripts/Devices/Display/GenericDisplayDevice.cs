@@ -76,7 +76,6 @@ namespace TouchScript.Devices.Display
                 // Mobiles / fullscreen
                 case RuntimePlatform.Android:
                 case RuntimePlatform.IPhonePlayer:
-                case RuntimePlatform.TizenPlayer:
                 case RuntimePlatform.WSAPlayerARM:
                 case RuntimePlatform.WSAPlayerX64:
                 case RuntimePlatform.WSAPlayerX86:
@@ -188,7 +187,6 @@ namespace TouchScript.Devices.Display
                 // Mobiles / fullscreen
                 case RuntimePlatform.Android:
                 case RuntimePlatform.IPhonePlayer:
-                case RuntimePlatform.TizenPlayer:
                 case RuntimePlatform.WSAPlayerARM:
                 case RuntimePlatform.WSAPlayerX64:
                 case RuntimePlatform.WSAPlayerX86:
