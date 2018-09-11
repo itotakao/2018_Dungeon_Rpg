@@ -15,7 +15,7 @@ namespace Ito
             stateMachine = new StateMachine();
             stateMachine.Start();
 
-            TitleUI.Show(false);
+            TitleUI.Show(true);
             GameUI.Show(false);
         }
 

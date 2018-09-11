@@ -13,12 +13,12 @@ public class GameUI : MonoBehaviour
         Current = this;
     }
 
-    public void Show(bool show)
+    public void Show(bool isShow)
     {
-        if (gameObject.activeSelf == show) { return; }
-        gameObject.SetActive(show);
+        if (gameObject.activeSelf == isShow) { return; }
+        gameObject.SetActive(isShow);
 
-        if (show)
+        if (isShow)
         {
             OnShow();
         }

@@ -14,21 +14,26 @@ public class TitleUI : MonoBehaviour
         Current = this;
     }
 
-    public void Show(bool show){
-        if (gameObject.activeSelf == show) { return; }
-        gameObject.SetActive(show);
-
-        if(show){
+    public void Show(bool isShow)
+    {
+        if (gameObject.activeSelf == isShow) { return; }
+        gameObject.SetActive(isShow);
+        if (isShow)
+        {
             OnShow();
-        }else{
+        }
+        else
+        {
             OnHide();
         }
     }
 
-    void OnShow(){
+    void OnShow()
+    {
         IsOnButton = false;
     }
-    void OnHide(){
+    void OnHide()
+    {
         IsOnButton = false;
     }
 
