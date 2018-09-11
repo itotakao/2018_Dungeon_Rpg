@@ -17,4 +17,10 @@ public class EventUI : MonoBehaviour
     {
         Current = this;
     }
+
+    public void Reset()
+    {
+        EventImage.sprite = null;
+        EventText.text = null;
+    }
 }

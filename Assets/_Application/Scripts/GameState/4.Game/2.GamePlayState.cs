@@ -16,14 +16,11 @@ namespace Ito
 
                 GameManager.IsNextTurn = false;
 
-                if (BattleManager.CurrentMonster.GetHealth() <= 0)
-                {
-                    return new GameRefleshState(StateMachine);
-                }
-                else // TODO:プレイヤー体力も見るように
-                {
-                    return new GamePlayState(StateMachine);
-                }
+                if (PlayerManager.Health <= 0) { ReloadScene(); }
+
+                if (BattleManager.CurrentMonster.GetHealth() <= 0){ return new GameRefleshState(StateMachine); }
+
+                return new GamePlayState(StateMachine);
             }
             return null;
         }

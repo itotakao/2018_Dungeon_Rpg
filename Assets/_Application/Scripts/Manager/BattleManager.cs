@@ -39,6 +39,7 @@ public class BattleManager : MonoBehaviour
     {
         CurrentMonster = GetRandamMonster();
         CurrentMonster.Initilize();
+        Debug.Log(CurrentMonster.GetIcon());
         EventUI.EventImage.sprite = CurrentMonster.GetIcon();
         EventUI.EventText.text = CurrentMonster.GetHealth().ToString();
     }
