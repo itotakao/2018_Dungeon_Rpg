@@ -4284,7 +4284,6 @@ GameObject:
   - component: {fileID: 1658758070}
   - component: {fileID: 1658758069}
   - component: {fileID: 1658758068}
-  - component: {fileID: 1658758067}
   m_Layer: 5
   m_Name: EventCanvas
   m_TagString: Untagged
@@ -4311,21 +4310,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1024, y: 576}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1658758067
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1658758065}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78be693d5b339462d963bee7a61ffe9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EventImage: {fileID: 0}
-  EventText: {fileID: 0}
-  BattleButton: {fileID: 1796457059}
-  EscapeButton: {fileID: 0}
 --- !u!114 &1658758068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4380,7 +4364,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 704263947
   m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!1 &1678411460
