@@ -5,9 +5,6 @@ public class GameUI : MonoBehaviour
 {
     public static GameUI Current { get; private set; }
 
-
-
-
     void Awake()
     {
         Current = this;
