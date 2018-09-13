@@ -9,7 +9,7 @@ public class BattleManager : MonoBehaviour
     public PlayerManager PlayerManager{ get { return PlayerManager.Current; }}
     public ItemManager ItemManager { get { return ItemManager.Current; } }
     public LogManager LogManager { get { return LogManager.Current; } }
-    public EventUI EventUI { get { return EventUI.Current; } }
+    public BattleUI BattleUI { get { return BattleUI.Current; } }
 
     public delegate void PlayEnterEvent();
     public PlayEnterEvent OnPlayEnterEvent;
@@ -31,8 +31,8 @@ public class BattleManager : MonoBehaviour
 
     public void ShowBattleUI(bool show)
     {
-        EventUI.BattleButton.enabled = show;
-        EventUI.EscapeButton.enabled = show;
+        BattleUI.BattleButton.enabled = show;
+        BattleUI.EscapeButton.enabled = show;
     }
 
     public void CallRandamMonster()
@@ -40,8 +40,8 @@ public class BattleManager : MonoBehaviour
         CurrentMonster = GetRandamMonster();
         CurrentMonster.Initilize();
         Debug.Log(CurrentMonster.GetIcon());
-        EventUI.EventImage.sprite = CurrentMonster.GetIcon();
-        EventUI.EventText.text = CurrentMonster.GetHealth().ToString();
+        BattleUI.EventImage.sprite = CurrentMonster.GetIcon();
+        BattleUI.EventText.text = CurrentMonster.GetHealth().ToString();
     }
 
     public Monster GetRandamMonster()
@@ -57,13 +57,16 @@ public class BattleManager : MonoBehaviour
 
     public void Battle()
     {
+        //TODO : 要カプセル化
+        BattleUI.BattleAnimator.SetTrigger("OnAttack");
+
         PlayerManager.Health -= 20;
         LogManager.Push("<color=red>体力40ダメージ</color>");
         PlayerManager.Gold += 30;
         LogManager.Push("<color=green>30ゴールド獲得</color>");
 
         CurrentMonster.Damage(PlayerManager.Attack);
-        EventUI.EventText.text = CurrentMonster.GetHealth().ToString();
+        BattleUI.EventText.text = CurrentMonster.GetHealth().ToString();
 
         if (CurrentMonster.GetHealth() <= 0)
         {

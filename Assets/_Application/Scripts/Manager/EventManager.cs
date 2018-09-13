@@ -7,7 +7,7 @@ public class EventManager : MonoBehaviour
     public static EventManager Current { get; private set; }
 
     public ItemManager ItemManager { get { return ItemManager.Current; } }
-    public EventUI EventUI { get { return EventUI.Current; } }
+    public BattleUI EventUI { get { return BattleUI.Current; } }
 
     public delegate void PlayEnterEvent();
     public PlayEnterEvent OnPlayEnterEvent;
