@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TitleUI : MonoBehaviour
 {
-
     public static TitleUI Current { get; private set; }
 
     public bool IsOnButton = false;

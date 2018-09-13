@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BattleButton : MonoBehaviour {
-
+    
     public PlayerManager PlayerManager { get { return PlayerManager.Current; } }
     public LogManager LogManager { get { return LogManager.Current; } }
     public GameManager GameManager { get { return GameManager.Current; } }
