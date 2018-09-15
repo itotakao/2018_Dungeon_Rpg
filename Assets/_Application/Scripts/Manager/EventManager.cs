@@ -36,7 +36,7 @@ public class EventManager : MonoBehaviour
     public void CallRandamMonster()
     {
         CurrentMonster = GetRandamMonster();
-        EventUI.EventImage.sprite = CurrentMonster.GetIcon();
+        EventUI.MonsterImage.sprite = CurrentMonster.GetIcon();
         EventUI.EventText.text = CurrentMonster.GetHealth().ToString();
     }
 

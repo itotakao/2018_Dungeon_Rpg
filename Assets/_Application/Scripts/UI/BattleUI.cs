@@ -7,7 +7,8 @@ public class BattleUI : MonoBehaviour
 {
     public static BattleUI Current { get; private set; }
 
-    public Image EventImage = null;
+    public Image MonsterImage = null;
+    public Slider AttackGauge = null;
     public Text EventText = null;
     public Animator BattleAnimator = null;
     public Button BattleButton = null;
@@ -20,7 +21,7 @@ public class BattleUI : MonoBehaviour
 
     public void Reset()
     {
-        EventImage.sprite = null;
+        MonsterImage.sprite = null;
         EventText.text = null;
     }
 }
