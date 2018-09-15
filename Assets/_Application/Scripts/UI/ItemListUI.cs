@@ -11,6 +11,8 @@ public class ItemListUI : MonoBehaviour
     public Image[] ItemImageList;
     public Text[] CounterTextList;
 
+    public GameObject ItemDialog;
+
     void Awake()
     {
         Current = this;
@@ -19,5 +21,10 @@ public class ItemListUI : MonoBehaviour
     public void Show(bool isShow)
     {
         foreach (var item in ItemImageList) { item.enabled = isShow; }
+    }
+
+    public void ActiveDialog(bool isActive)
+    {
+        ItemDialog.SetActive(isActive);
     }
 }

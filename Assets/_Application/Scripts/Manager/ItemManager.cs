@@ -17,9 +17,21 @@ public class ItemManager : MonoBehaviour
         set { itemDictionary.CopyFrom(value); }
     }
 
+    public Item[] ScriptItemList;
+
     void Awake()
     {
         Current = this;
+    }
+
+    void Start()
+    {
+        Initilize();
+    }
+
+    void Initilize()
+    {
+        foreach (var item in ScriptItemList) { AddItem(item); }
     }
 
     public void AddItem(Item item)
@@ -45,8 +57,8 @@ public class ItemManager : MonoBehaviour
         {
             if (image.sprite && image.sprite.name == item.GetIcon().name)
             {
-                if(itemDictionary[item] == 0)
-                { 
+                if (itemDictionary[item] == 0)
+                {
                     ItemListUI.ItemImageList[counter].sprite = null;
                     ItemListUI.CounterTextList[counter].text = "0";
                     return;
