@@ -3109,7 +3109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MonsterImage: {fileID: 1279500148}
-  AttackGauge: {fileID: 1155831604}
+  AttackSlider: {fileID: 1155831604}
   EventText: {fileID: 434596201}
   BattleAnimator: {fileID: 687871435}
   BattleButton: {fileID: 652376738}
@@ -4024,8 +4024,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e816d51212ad4141affd3c084b4dcb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxHealthCache: 100
+  GoldCache: 0
   Attack: 50
   Defence: 20
+  Speed: 100
+  AttackGauge: 100
 --- !u!1 &824691081
 GameObject:
   m_ObjectHideFlags: 0

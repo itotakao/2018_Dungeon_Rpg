@@ -10,6 +10,7 @@ public class PlayerManager : MonoBehaviour
     public HealthUI HealthUI { get { return HealthUI.Current; } }
     public InformationUI InformationUI{ get { return InformationUI.Current; }}
 
+    [SerializeField]
     float MaxHealthCache = 100;
     public float MaxHealth
     {
@@ -31,6 +32,8 @@ public class PlayerManager : MonoBehaviour
             if (HealthCache > MaxHealth) { HealthCache = MaxHealth; }
         }
     }
+
+    [SerializeField]
     float GoldCache;
     public float Gold
     {
@@ -44,15 +47,24 @@ public class PlayerManager : MonoBehaviour
 
     public float Attack = 50.0f;
     public float Defence = 20.0f;
+    public float Speed = 100.0f;
+
+    [HideInInspector]
+    public float AttackGauge = 100.0f;
 
     void Awake()
     {
         Current = this;
     }
 
-    public void RefleshAll(){
+    public void Initilize(){
         MaxHealth = MaxHealth;
         Health = MaxHealth;
         Gold = 0;
+    }
+
+    public void Reflesh()
+    {
+        Health = MaxHealth;
     }
 }

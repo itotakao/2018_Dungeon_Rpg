@@ -1,6 +1,5 @@
 ﻿using Ito.GameState;
 using System.Collections;
-
 namespace Ito
 {
     public class GamePlayState : State
@@ -12,13 +11,15 @@ namespace Ito
 
         State Transition()
         {
+            if (PlayerManager.Health <= 0) { ReloadScene(); }
+
+            if (BattleManager.CurrentMonster.GetHealth() <= 0) { return new GameRefleshState(StateMachine); }
+
             if (GameManager.IsNextTurn) {
 
                 GameManager.IsNextTurn = false;
 
-                if (PlayerManager.Health <= 0) { ReloadScene(); }
 
-                if (BattleManager.CurrentMonster.GetHealth() <= 0){ return new GameRefleshState(StateMachine); }
 
                 return new GamePlayState(StateMachine);
             }
@@ -29,26 +30,40 @@ namespace Ito
         {
             base.OnStateEnter();
 
-            if (BattleManager.OnPlayEnterEvent != null)
-            {
-                BattleManager.OnPlayEnterEvent();
-            }
+            BattleManager.OnPlayEvent += BattleManager.OnPlayerBattle;
+            BattleManager.OnPlayEvent += BattleManager.OnEnemyBattle;
 
-            //StartCoroutine(CoPlaying());
+
+            //if (BattleManager.OnPlayEnterEvent != null)
+            //{
+            //    BattleManager.OnPlayEnterEvent();
+            //}
+
+            StartCoroutine(CoPlaying());
         }
 
         IEnumerator CoPlaying(){
-            yield return null;
+            while (true)
+            {
+                if(BattleManager.OnPlayEvent != null)
+                {
+                    BattleManager.OnPlayEvent();
+                }
+                yield return null;
+            }
         }
 
         public override void OnStateExit()
         {
             base.OnStateExit();
 
-            if (BattleManager.OnPlayExitEvent != null)
-            {
-                BattleManager.OnPlayExitEvent();
-            }
+            BattleManager.OnPlayEvent -= BattleManager.OnPlayerBattle;
+            BattleManager.OnPlayEvent -= BattleManager.OnEnemyBattle;
+
+            //if (BattleManager.OnPlayExitEvent != null)
+            //{
+            //    BattleManager.OnPlayExitEvent();
+            //}
             //BGMManager.Current.Stop();
         }
     }
