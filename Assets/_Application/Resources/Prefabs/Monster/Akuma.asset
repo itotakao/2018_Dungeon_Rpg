@@ -17,7 +17,7 @@ MonoBehaviour:
   maxHealth: 120
   attack: 40
   defence: 0
-  speed: 0
+  speed: 50
   gold: 30
   normalDropList:
   - {fileID: 11400000, guid: a4d471922488d433d9f9f01ba5a43d98, type: 2}

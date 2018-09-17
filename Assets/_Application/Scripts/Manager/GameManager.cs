@@ -6,8 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Current { get; private set; }
 
-    public bool IsNextTurn = false;
-    public bool IsContinueBattle = false;
+    public bool IsAnimation = false;
 
     void Awake()
     {
@@ -16,6 +15,6 @@ public class GameManager : MonoBehaviour
 
     public void Reflesh()
     {
-        IsNextTurn = false;
+        IsAnimation = false;
     }
 }

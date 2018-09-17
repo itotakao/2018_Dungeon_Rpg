@@ -10,12 +10,15 @@ public class BattleManager : MonoBehaviour
     public PlayerManager PlayerManager { get { return PlayerManager.Current; } }
     public ItemManager ItemManager { get { return ItemManager.Current; } }
     public LogManager LogManager { get { return LogManager.Current; } }
+    public GameManager GameManager{ get { return GameManager.Current; }}
     public BattleUI BattleUI { get { return BattleUI.Current; } }
 
     public delegate void PlayEnterEvent();
     public PlayEnterEvent OnPlayEnterEvent;
-    public delegate void PlayingEvent();
-    public PlayingEvent OnPlayEvent;
+    public delegate void PlayerBattleEvent();
+    public PlayerBattleEvent OnPlayerBattleEvent;
+    public delegate void EnemyBattleEvent();
+    public EnemyBattleEvent OnEnemyBattleEvent;
     public delegate void PlayExitEvent();
     public PlayExitEvent OnPlayExitEvent;
 
@@ -40,7 +43,6 @@ public class BattleManager : MonoBehaviour
     {
         CurrentMonster = GetRandamMonster();
         CurrentMonster.Initilize();
-        Debug.Log(CurrentMonster.GetIcon());
         BattleUI.MonsterImage.sprite = CurrentMonster.GetIcon();
         BattleUI.EventText.text = CurrentMonster.GetHealth().ToString();
     }
@@ -58,9 +60,6 @@ public class BattleManager : MonoBehaviour
 
     public void Battle()
     {
-
-
-
         //TODO : 要カプセル化
         BattleUI.BattleAnimator.SetTrigger("OnAttack");
 
@@ -75,9 +74,9 @@ public class BattleManager : MonoBehaviour
         if (PlayerManager.AttackGauge <= 0)
         {
             PlayerManager.AttackGauge = 100f;
-
+            GameManager.IsAnimation = true;
             //TODO : 要カプセル化
-            BattleUI.MonsterImage.transform.DOShakeScale(0.1f);
+            BattleUI.MonsterImage.transform.DOShakeScale(0.1f).OnComplete(()=> { GameManager.IsAnimation = false; });
             BattleUI.BattleAnimator.SetTrigger("OnAttack");
 
             CurrentMonster.Damage(PlayerManager.Attack);
@@ -89,14 +88,13 @@ public class BattleManager : MonoBehaviour
 
     public void OnEnemyBattle()
     {
-
         // TODO : マジックナンバー
-        BattleUI.AttackSlider.value -= 5f * Time.deltaTime;
+        BattleUI.AttackSlider.value -= CurrentMonster.GetSpeed() * Time.deltaTime;
         if (BattleUI.AttackSlider.value <= 0)
         {
-            BattleUI.MonsterImage.transform.DOPunchScale(new Vector3(1.5f, 1.5f), 0.1f);
-
+            GameManager.IsAnimation = true;
             BattleUI.AttackSlider.value = BattleUI.AttackSlider.maxValue;
+            BattleUI.MonsterImage.transform.DOPunchScale(new Vector3(1.5f, 1.5f), 0.1f).OnComplete(() => { GameManager.IsAnimation = false; });
 
             PlayerManager.Health -= 20;
             LogManager.Push("<color=red>体力40ダメージ</color>");

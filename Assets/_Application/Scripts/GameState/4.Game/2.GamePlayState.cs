@@ -1,5 +1,6 @@
 ﻿using Ito.GameState;
 using System.Collections;
+using UnityEngine;
 namespace Ito
 {
     public class GamePlayState : State
@@ -15,14 +16,6 @@ namespace Ito
 
             if (BattleManager.CurrentMonster.GetHealth() <= 0) { return new GameRefleshState(StateMachine); }
 
-            if (GameManager.IsNextTurn) {
-
-                GameManager.IsNextTurn = false;
-
-
-
-                return new GamePlayState(StateMachine);
-            }
             return null;
         }
 
@@ -30,8 +23,8 @@ namespace Ito
         {
             base.OnStateEnter();
 
-            BattleManager.OnPlayEvent += BattleManager.OnPlayerBattle;
-            BattleManager.OnPlayEvent += BattleManager.OnEnemyBattle;
+            BattleManager.OnPlayerBattleEvent += BattleManager.OnPlayerBattle;
+            BattleManager.OnEnemyBattleEvent += BattleManager.OnEnemyBattle;
 
 
             //if (BattleManager.OnPlayEnterEvent != null)
@@ -45,9 +38,15 @@ namespace Ito
         IEnumerator CoPlaying(){
             while (true)
             {
-                if(BattleManager.OnPlayEvent != null)
+                yield return new WaitUntil(() => !GameManager.IsAnimation);
+                if(BattleManager.OnPlayerBattleEvent != null)
                 {
-                    BattleManager.OnPlayEvent();
+                    BattleManager.OnPlayerBattleEvent();
+                }
+                yield return new WaitUntil(() => !GameManager.IsAnimation);
+                if (BattleManager.OnEnemyBattleEvent != null)
+                {
+                    BattleManager.OnEnemyBattleEvent();
                 }
                 yield return null;
             }
@@ -59,8 +58,8 @@ namespace Ito
 
             BattleManager.ExitBattle();
 
-            BattleManager.OnPlayEvent -= BattleManager.OnPlayerBattle;
-            BattleManager.OnPlayEvent -= BattleManager.OnEnemyBattle;
+            BattleManager.OnPlayerBattleEvent -= BattleManager.OnPlayerBattle;
+            BattleManager.OnEnemyBattleEvent -= BattleManager.OnEnemyBattle;
 
             //if (BattleManager.OnPlayExitEvent != null)
             //{
