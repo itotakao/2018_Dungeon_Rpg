@@ -57,7 +57,8 @@ public class PlayerManager : MonoBehaviour
         Current = this;
     }
 
-    public void Initilize(){
+    public void Initilize()
+    {
         MaxHealth = MaxHealth;
         Health = MaxHealth;
         Gold = 0;

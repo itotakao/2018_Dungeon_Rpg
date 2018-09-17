@@ -35,6 +35,10 @@ public class Monster : ScriptableObject
     [SerializeField]
     private float defence;
     [SerializeField]
+    private float speed;
+    [SerializeField]
+    private float gold;
+    [SerializeField]
     private Item[] normalDropList;
     [SerializeField]
     private float normalDropLate;
@@ -74,6 +78,14 @@ public class Monster : ScriptableObject
     public float GetDefence()
     {
         return defence;
+    }
+    public float GetSpeed()
+    {
+        return speed;
+    }
+    public float GetGold()
+    {
+        return gold;
     }
     public Item[] GetNormalDropList()
     {

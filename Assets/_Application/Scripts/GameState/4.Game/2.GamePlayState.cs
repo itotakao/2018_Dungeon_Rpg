@@ -57,6 +57,8 @@ namespace Ito
         {
             base.OnStateExit();
 
+            BattleManager.ExitBattle();
+
             BattleManager.OnPlayEvent -= BattleManager.OnPlayerBattle;
             BattleManager.OnPlayEvent -= BattleManager.OnEnemyBattle;
 

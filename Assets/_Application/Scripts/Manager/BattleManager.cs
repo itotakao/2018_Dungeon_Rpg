@@ -63,11 +63,6 @@ public class BattleManager : MonoBehaviour
         CurrentMonster.Damage(PlayerManager.Attack);
         BattleUI.EventText.text = CurrentMonster.GetHealth().ToString();
 
-        if (CurrentMonster.GetHealth() <= 0)
-        {
-            LogManager.Push("<color=green>アイテムを獲得</color>");
-            LotteryDropItem(CurrentMonster);
-        }
     }
 
     public void OnPlayerBattle()
@@ -97,6 +92,12 @@ public class BattleManager : MonoBehaviour
             PlayerManager.Health -= 20;
             LogManager.Push("<color=red>体力40ダメージ</color>");
         }
+    }
+
+    public void ExitBattle()
+    {
+        LotteryDropItem(CurrentMonster);
+        PlayerManager.Gold = CurrentMonster.GetGold();
     }
 
     public void Reflesh()
