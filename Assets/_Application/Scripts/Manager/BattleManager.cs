@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class BattleManager : MonoBehaviour
 {
     public static BattleManager Current { get; private set; }
 
-    public PlayerManager PlayerManager{ get { return PlayerManager.Current; }}
+    public PlayerManager PlayerManager { get { return PlayerManager.Current; } }
     public ItemManager ItemManager { get { return ItemManager.Current; } }
     public LogManager LogManager { get { return LogManager.Current; } }
     public BattleUI BattleUI { get { return BattleUI.Current; } }
@@ -57,6 +58,9 @@ public class BattleManager : MonoBehaviour
 
     public void Battle()
     {
+
+
+
         //TODO : 要カプセル化
         BattleUI.BattleAnimator.SetTrigger("OnAttack");
 
@@ -73,20 +77,25 @@ public class BattleManager : MonoBehaviour
             PlayerManager.AttackGauge = 100f;
 
             //TODO : 要カプセル化
+            BattleUI.MonsterImage.transform.DOShakeScale(0.1f);
             BattleUI.BattleAnimator.SetTrigger("OnAttack");
 
             CurrentMonster.Damage(PlayerManager.Attack);
             BattleUI.EventText.text = CurrentMonster.GetHealth().ToString();
 
-            LogManager.Push("<color=green>40ダメージ 与えた</color>");
+            LogManager.Push(string.Format("<color=green>{0}ダメージ 与えた</color>",PlayerManager.Attack));
         }
     }
 
     public void OnEnemyBattle()
     {
+
         // TODO : マジックナンバー
         BattleUI.AttackSlider.value -= 5f * Time.deltaTime;
-        if(BattleUI.AttackSlider.value <= 0){
+        if (BattleUI.AttackSlider.value <= 0)
+        {
+            BattleUI.MonsterImage.transform.DOPunchScale(new Vector3(1.5f, 1.5f), 0.1f);
+
             BattleUI.AttackSlider.value = BattleUI.AttackSlider.maxValue;
 
             PlayerManager.Health -= 20;
