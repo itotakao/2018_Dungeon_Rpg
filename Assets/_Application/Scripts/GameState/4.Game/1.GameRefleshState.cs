@@ -22,26 +22,35 @@ namespace Ito
         public override void OnStateEnter()
         {
             base.OnStateEnter();
-            GameManager.Reflesh();
+            Reflesh();
             StartCoroutine(CoReflesh());
         }
 
-        IEnumerator CoReflesh(){
+        IEnumerator CoReflesh()
+        {
             FadeManager.isFadeOut = true;
             TurnManager.AddTurn();
-            yield return new WaitForSeconds(2);
-            FadeManager.isFadeIn = true;
 
-            // CardManager.ShuffleCard(); // 使わなくなった
+            yield return new WaitForSeconds(2);
+
+            FadeManager.isFadeIn = true;
             BattleManager.CallRandamMonster();
 
             yield return new WaitForSeconds(2);
+
             isFinish = true;
         }
 
         public override void OnStateExit()
         {
             base.OnStateExit();
+        }
+
+        public void Reflesh()
+        {
+            GameManager.Reflesh();
+            PlayerManager.Reflesh();
+            BattleManager.Reflesh();
         }
     }
 }

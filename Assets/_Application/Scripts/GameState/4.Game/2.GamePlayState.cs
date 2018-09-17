@@ -1,6 +1,6 @@
 ﻿using Ito.GameState;
 using System.Collections;
-
+using UnityEngine;
 namespace Ito
 {
     public class GamePlayState : State
@@ -12,16 +12,10 @@ namespace Ito
 
         State Transition()
         {
-            if (GameManager.IsNextTurn) {
+            if (PlayerManager.Health <= 0) { ReloadScene(); }
 
-                GameManager.IsNextTurn = false;
+            if (BattleManager.CurrentMonster.GetHealth() <= 0) { return new GameRefleshState(StateMachine); }
 
-                if (PlayerManager.Health <= 0) { ReloadScene(); }
-
-                if (BattleManager.CurrentMonster.GetHealth() <= 0){ return new GameRefleshState(StateMachine); }
-
-                return new GamePlayState(StateMachine);
-            }
             return null;
         }
 
@@ -29,26 +23,48 @@ namespace Ito
         {
             base.OnStateEnter();
 
-            if (BattleManager.OnPlayEnterEvent != null)
-            {
-                BattleManager.OnPlayEnterEvent();
-            }
+            BattleManager.OnPlayerBattleEvent += BattleManager.OnPlayerBattle;
+            BattleManager.OnEnemyBattleEvent += BattleManager.OnEnemyBattle;
 
-            //StartCoroutine(CoPlaying());
+
+            //if (BattleManager.OnPlayEnterEvent != null)
+            //{
+            //    BattleManager.OnPlayEnterEvent();
+            //}
+
+            StartCoroutine(CoPlaying());
         }
 
         IEnumerator CoPlaying(){
-            yield return null;
+            while (true)
+            {
+                yield return new WaitUntil(() => !GameManager.IsAnimation);
+                if(BattleManager.OnPlayerBattleEvent != null)
+                {
+                    BattleManager.OnPlayerBattleEvent();
+                }
+                yield return new WaitUntil(() => !GameManager.IsAnimation);
+                if (BattleManager.OnEnemyBattleEvent != null)
+                {
+                    BattleManager.OnEnemyBattleEvent();
+                }
+                yield return null;
+            }
         }
 
         public override void OnStateExit()
         {
             base.OnStateExit();
 
-            if (BattleManager.OnPlayExitEvent != null)
-            {
-                BattleManager.OnPlayExitEvent();
-            }
+            BattleManager.ExitBattle();
+
+            BattleManager.OnPlayerBattleEvent -= BattleManager.OnPlayerBattle;
+            BattleManager.OnEnemyBattleEvent -= BattleManager.OnEnemyBattle;
+
+            //if (BattleManager.OnPlayExitEvent != null)
+            //{
+            //    BattleManager.OnPlayExitEvent();
+            //}
             //BGMManager.Current.Stop();
         }
     }

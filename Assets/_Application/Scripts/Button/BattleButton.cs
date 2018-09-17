@@ -10,10 +10,10 @@ public class BattleButton : MonoBehaviour {
 
     public void OnButton()
     {
-        if (GameManager.IsNextTurn ) { return; }
+        //if (GameManager.IsNextTurn ) { return; }
 
         BattleManager.Battle();
 
-        GameManager.IsNextTurn = true;
+        //GameManager.IsNextTurn = true;
     }
 }

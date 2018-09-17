@@ -1,20 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class BattleManager : MonoBehaviour
 {
     public static BattleManager Current { get; private set; }
 
-    public PlayerManager PlayerManager{ get { return PlayerManager.Current; }}
+    public PlayerManager PlayerManager { get { return PlayerManager.Current; } }
     public ItemManager ItemManager { get { return ItemManager.Current; } }
     public LogManager LogManager { get { return LogManager.Current; } }
+    public GameManager GameManager{ get { return GameManager.Current; }}
     public BattleUI BattleUI { get { return BattleUI.Current; } }
 
     public delegate void PlayEnterEvent();
     public PlayEnterEvent OnPlayEnterEvent;
-    public delegate void PlayingEvent();
-    public PlayingEvent OnPlayingEvent;
+    public delegate void PlayerBattleEvent();
+    public PlayerBattleEvent OnPlayerBattleEvent;
+    public delegate void EnemyBattleEvent();
+    public EnemyBattleEvent OnEnemyBattleEvent;
     public delegate void PlayExitEvent();
     public PlayExitEvent OnPlayExitEvent;
 
@@ -39,8 +43,7 @@ public class BattleManager : MonoBehaviour
     {
         CurrentMonster = GetRandamMonster();
         CurrentMonster.Initilize();
-        Debug.Log(CurrentMonster.GetIcon());
-        BattleUI.EventImage.sprite = CurrentMonster.GetIcon();
+        BattleUI.MonsterImage.sprite = CurrentMonster.GetIcon();
         BattleUI.EventText.text = CurrentMonster.GetHealth().ToString();
     }
 
@@ -60,18 +63,52 @@ public class BattleManager : MonoBehaviour
         //TODO : 要カプセル化
         BattleUI.BattleAnimator.SetTrigger("OnAttack");
 
-        PlayerManager.Health -= 20;
-        LogManager.Push("<color=red>体力40ダメージ</color>");
-        PlayerManager.Gold += 30;
-        LogManager.Push("<color=green>30ゴールド獲得</color>");
-
         CurrentMonster.Damage(PlayerManager.Attack);
         BattleUI.EventText.text = CurrentMonster.GetHealth().ToString();
 
-        if (CurrentMonster.GetHealth() <= 0)
+    }
+
+    public void OnPlayerBattle()
+    {
+        PlayerManager.AttackGauge -= PlayerManager.Speed * Time.deltaTime;
+        if (PlayerManager.AttackGauge <= 0)
         {
-            LogManager.Push("<color=green>アイテムを獲得</color>");
-            LotteryDropItem(CurrentMonster);
+            PlayerManager.AttackGauge = 100f;
+            GameManager.IsAnimation = true;
+            //TODO : 要カプセル化
+            BattleUI.MonsterImage.transform.DOShakeScale(0.1f).OnComplete(()=> { GameManager.IsAnimation = false; });
+            BattleUI.BattleAnimator.SetTrigger("OnAttack");
+
+            CurrentMonster.Damage(PlayerManager.Attack);
+            BattleUI.EventText.text = CurrentMonster.GetHealth().ToString();
+
+            LogManager.Push(string.Format("<color=green>{0}ダメージ 与えた</color>",PlayerManager.Attack));
         }
+    }
+
+    public void OnEnemyBattle()
+    {
+        // TODO : マジックナンバー
+        BattleUI.AttackSlider.value -= CurrentMonster.GetSpeed() * Time.deltaTime;
+        if (BattleUI.AttackSlider.value <= 0)
+        {
+            GameManager.IsAnimation = true;
+            BattleUI.AttackSlider.value = BattleUI.AttackSlider.maxValue;
+            BattleUI.MonsterImage.transform.DOPunchScale(new Vector3(1.5f, 1.5f), 0.1f).OnComplete(() => { GameManager.IsAnimation = false; });
+
+            PlayerManager.Health -= 20;
+            LogManager.Push("<color=red>体力40ダメージ</color>");
+        }
+    }
+
+    public void ExitBattle()
+    {
+        LotteryDropItem(CurrentMonster);
+        PlayerManager.Gold = CurrentMonster.GetGold();
+    }
+
+    public void Reflesh()
+    {
+        BattleUI.AttackSlider.value = BattleUI.AttackSlider.maxValue;
     }
 }
