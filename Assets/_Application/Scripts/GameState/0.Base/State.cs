@@ -19,7 +19,7 @@ namespace Ito
         public GameManager GameManager{ get { return GameManager.Current; }}
         public PlayerManager PlayerManager{ get { return PlayerManager.Current; }}
         public BattleManager BattleManager{ get { return BattleManager.Current; }}
-        public LogManager LogManager{ get { return LogManager.Current; }}
+        public TextManager TextManager{ get { return TextManager.Current; }}
 
         //enum SkipToState { None, Tutorial, Opening, Duel1, Duel2, FinalDuel, Result };
         //SkipToState skipTo = SkipToState.None;

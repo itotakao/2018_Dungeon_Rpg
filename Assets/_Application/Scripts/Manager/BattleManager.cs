@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
+//TODO : 役割持たせすぎ　分割する必要あり
 public class BattleManager : MonoBehaviour
 {
     public static BattleManager Current { get; private set; }
 
     public PlayerManager PlayerManager { get { return PlayerManager.Current; } }
     public ItemManager ItemManager { get { return ItemManager.Current; } }
-    public LogManager LogManager { get { return LogManager.Current; } }
+    public TextManager TextManager { get { return TextManager.Current; } }
     public GameManager GameManager{ get { return GameManager.Current; }}
     public BattleUI BattleUI { get { return BattleUI.Current; } }
 
@@ -82,7 +83,7 @@ public class BattleManager : MonoBehaviour
             CurrentMonster.Damage(PlayerManager.Attack);
             BattleUI.EventText.text = CurrentMonster.GetHealth().ToString();
 
-            LogManager.Push(string.Format("<color=green>{0}ダメージ 与えた</color>",PlayerManager.Attack));
+            TextManager.PushLog(string.Format("<color=green>{0}ダメージ 与えた</color>",PlayerManager.Attack));
         }
     }
 
@@ -97,7 +98,7 @@ public class BattleManager : MonoBehaviour
             BattleUI.MonsterImage.transform.DOPunchScale(new Vector3(1.5f, 1.5f), 0.1f).OnComplete(() => { GameManager.IsAnimation = false; });
 
             PlayerManager.Health -= 20;
-            LogManager.Push("<color=red>体力40ダメージ</color>");
+            TextManager.PushLog("<color=red>体力40ダメージ</color>");
         }
     }
 

@@ -28,7 +28,7 @@ namespace Ito
             GameUI.Show(false);
 
             PlayerManager.Initilize();
-            LogManager.ClerText();
+            TextManager.ClerLog();
 
             EventUI.Reset();
         }
