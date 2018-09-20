@@ -33,7 +33,7 @@ namespace Ito
             yield return new WaitForSeconds(2);
 
             BattleUI.Show(true);
-            TurnManager.AddTurn();
+            //TurnManager.AddTurn();
             BattleManager.CallRandamMonster();
 
             isFinish = true;
