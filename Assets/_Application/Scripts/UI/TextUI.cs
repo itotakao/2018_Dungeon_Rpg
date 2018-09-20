@@ -10,8 +10,14 @@ public class TextUI : MonoBehaviour {
     public Text LogText;
     public Text popUpText;
 
-    void Start()
+    void Awake()
     {
         Current = this;
+    }
+
+    void Start()
+    {
+        LogText.text = null;
+        popUpText.text = null;
     }
 }

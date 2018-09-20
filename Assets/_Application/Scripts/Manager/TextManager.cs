@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
+using DG.DemiLib;
 
 public class TextManager : MonoBehaviour
 {
@@ -37,5 +39,12 @@ public class TextManager : MonoBehaviour
     public void ClerLog()
     {
         TextUI.LogText.text = "";
+    }
+
+    public void PopUpText(string text)
+    {
+        TextUI.popUpText.text = text;
+        TextUI.popUpText.transform.localPosition = new Vector3(UnityEngine.Random.Range(-10f, 10f), UnityEngine.Random.Range(-10f, 10f), 0);
+        TextUI.popUpText.transform.DOLocalMove(new Vector3(TextUI.popUpText.transform.localPosition.x, TextUI.popUpText.transform.localPosition.y +10, TextUI.popUpText.transform.localPosition.z), 1f).OnComplete(() => { TextUI.popUpText.text = null; });
     }
 }

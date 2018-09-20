@@ -83,6 +83,7 @@ public class BattleManager : MonoBehaviour
             CurrentMonster.Damage(PlayerManager.Attack);
             BattleUI.EventText.text = CurrentMonster.GetHealth().ToString();
 
+            TextManager.PopUpText(PlayerManager.Attack.ToString());
             TextManager.PushLog(string.Format("<color=green>{0}ダメージ 与えた</color>",PlayerManager.Attack));
         }
     }

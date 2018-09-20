@@ -11103,7 +11103,6 @@ GameObject:
   - component: {fileID: 2139773895}
   - component: {fileID: 2139773899}
   - component: {fileID: 2139773898}
-  - component: {fileID: 2139773897}
   - component: {fileID: 2139773896}
   m_Layer: 5
   m_Name: PopUpText
@@ -11144,20 +11143,6 @@ MonoBehaviour:
   m_EffectColor: {r: 1, g: 1, b: 1, a: 1}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
---- !u!114 &2139773897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2139773894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c51d70335cfd64282938b34d7f4a7d4e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LogText: {fileID: 2139773898}
-  MaxLog: 6
-  LogList: []
 --- !u!114 &2139773898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11184,7 +11169,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 50
-    m_Alignment: 0
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 1
