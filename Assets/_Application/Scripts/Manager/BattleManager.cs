@@ -29,6 +29,8 @@ public class BattleManager : MonoBehaviour
     public Monster CurrentMonster { get; private set; }
     public Monster[] MonsterList;
 
+    Tweener damageEffectTween = null;
+
     void Awake()
     {
         Current = this;
@@ -83,7 +85,8 @@ public class BattleManager : MonoBehaviour
             CurrentMonster.Damage(PlayerManager.Attack);
             BattleUI.EventText.text = CurrentMonster.GetHealth().ToString();
 
-            TextManager.PopUpText(PlayerManager.Attack.ToString(),Color.red);
+            DamageEffect(PlayerManager.Attack, Color.red);
+
             TextManager.PushLog(string.Format("<color=green>{0}ダメージ 与えた</color>",PlayerManager.Attack));
         }
     }
@@ -98,11 +101,16 @@ public class BattleManager : MonoBehaviour
             BattleUI.AttackSlider.value = BattleUI.AttackSlider.maxValue;
             BattleUI.MonsterImage.transform.DOPunchScale(new Vector3(1.5f, 1.5f), 0.1f).OnComplete(() => { GameManager.IsAnimation = false; });
 
-            TextManager.PopUpText(CurrentMonster.GetAttack().ToString(), Color.yellow);
+            DamageEffect(CurrentMonster.GetAttack(), Color.yellow);
 
             PlayerManager.Health -= CurrentMonster.GetAttack();
             TextManager.PushLog(string.Format("<color=red>体力{0}ダメージ</color>",CurrentMonster.GetAttack()));
         }
+    }
+
+    public void DamageEffect(float damage,Color textColor){
+        damageEffectTween.Kill();
+        TextManager.PopUpText(damage.ToString(), textColor);
     }
 
     public void ExitBattle()
