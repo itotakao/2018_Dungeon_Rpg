@@ -47,7 +47,8 @@ public class BattleManager : MonoBehaviour
         CurrentMonster = GetRandamMonster();
         CurrentMonster.Initilize();
         BattleUI.MonsterImage.sprite = CurrentMonster.GetIcon();
-        BattleUI.EventText.text = CurrentMonster.GetHealth().ToString();
+        BattleUI.HealthSlider.maxValue = CurrentMonster.GetMaxHealth();
+        BattleUI.HealthSlider.value = CurrentMonster.GetHealth();
     }
 
     public Monster GetRandamMonster()
@@ -67,7 +68,8 @@ public class BattleManager : MonoBehaviour
         BattleUI.BattleAnimator.SetTrigger("OnAttack");
 
         CurrentMonster.Damage(PlayerManager.Attack);
-        BattleUI.EventText.text = CurrentMonster.GetHealth().ToString();
+        BattleUI.HealthSlider.value = CurrentMonster.GetHealth();
+        DamageEffect(PlayerManager.Attack, Color.yellow);
 
     }
 
@@ -83,7 +85,7 @@ public class BattleManager : MonoBehaviour
             BattleUI.BattleAnimator.SetTrigger("OnAttack");
 
             CurrentMonster.Damage(PlayerManager.Attack);
-            BattleUI.EventText.text = CurrentMonster.GetHealth().ToString();
+            BattleUI.HealthSlider.value = CurrentMonster.GetHealth();
 
             DamageEffect(PlayerManager.Attack, Color.red);
 
