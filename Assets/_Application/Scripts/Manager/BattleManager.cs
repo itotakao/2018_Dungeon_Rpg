@@ -63,7 +63,7 @@ public class BattleManager : MonoBehaviour
         if (monster.LotteryRarelItem()) { ItemManager.AddItem(monster.GetRareDropItem()); }
     }
 
-    public void Battle()
+    public void OnBattleButton()
     {
         AttackEffect(PlayerManager.Attack, Color.red);
         CurrentMonster.Damage(PlayerManager.Attack);
