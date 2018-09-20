@@ -7,50 +7,53 @@ public class PlayerManager : MonoBehaviour
 
     public static PlayerManager Current { get; private set; }
 
+    public TextManager TextManager { get { return TextManager.Current; } }
     public HealthUI HealthUI { get { return HealthUI.Current; } }
-    public InformationUI InformationUI{ get { return InformationUI.Current; }}
+    public InformationUI InformationUI { get { return InformationUI.Current; } }
 
     [SerializeField]
-    float MaxHealthCache = 100;
-    public float MaxHealth
+    float maxHealthCache = 100;
+    float maxHealth
     {
-        get { return MaxHealthCache; }
+        get { return maxHealthCache; }
         set
         {
-            MaxHealthCache = value;
-            HealthUI.HealthBar.maxValue = MaxHealthCache;
+            maxHealthCache = value;
         }
     }
-    float HealthCache;
-    public float Health
+    float healthCache;
+    float health
     {
-        get { return HealthCache; }
+        get { return healthCache; }
         set
         {
-            HealthCache = value;
-            HealthUI.HealthBar.value = HealthCache;
-            if (HealthCache > MaxHealth) { HealthCache = MaxHealth; }
+            healthCache = value;
+            HealthUI.HealthBar.value = healthCache;
+            if (healthCache > maxHealth) { healthCache = maxHealth; }
         }
     }
 
     [SerializeField]
-    float GoldCache;
-    public float Gold
+    float goldCache = 0;
+    float gold
     {
-        get { return GoldCache; }
+        get { return goldCache; }
         set
         {
-            GoldCache = value;
-            InformationUI.GoldText.text = GoldCache.ToString();
+            goldCache = value;
+            if (goldCache < 0) { goldCache = 0; }
+
         }
     }
 
-    public float Attack = 50.0f;
-    public float Defence = 20.0f;
-    public float Speed = 100.0f;
-
-    [HideInInspector]
-    public float AttackGauge = 100.0f;
+    [SerializeField]
+    float attack = 50.0f;
+    [SerializeField]
+    float defence = 20.0f;
+    [SerializeField]
+    float speed = 100.0f;
+    [SerializeField]
+    float attackInterval = 100.0f;
 
     void Awake()
     {
@@ -59,13 +62,95 @@ public class PlayerManager : MonoBehaviour
 
     public void Initilize()
     {
-        MaxHealth = MaxHealth;
-        Health = MaxHealth;
-        Gold = 0;
+        maxHealth = maxHealth;
+        health = maxHealth;
+        gold = 0;
     }
 
     public void Reflesh()
     {
-        Health = MaxHealth;
+        health = maxHealth;
+    }
+
+    public float GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public float GetHealth()
+    {
+        return health;
+    }
+
+    public float GetAttack()
+    {
+        return attack;
+    }
+
+    public float GetDefence()
+    {
+        return defence;
+    }
+
+    public float GetSpeed()
+    {
+        return speed;
+    }
+
+    public float GetGold()
+    {
+        return gold;
+    }
+
+    public float GetAttackInterval()
+    {
+        return attackInterval;
+    }
+
+
+    public void SetMaxHealth(float value)
+    {
+        maxHealth = value;
+        HealthUI.HealthBar.maxValue = maxHealth;
+
+        if (health > maxHealth) { SetHealth(maxHealth); }
+    }
+
+    public void SetHealth(float value)
+    {
+        health = value;
+        HealthUI.HealthBar.value = health;
+    }
+
+    public void SetAttackInterval(float value)
+    {
+        attackInterval = value;
+    }
+
+    public void Damage(float value)
+    {
+        health -= value;
+    }
+
+    public void Heal(float value)
+    {
+        health += value;
+    }
+
+    public void AddGold(float value)
+    {
+        gold += value;
+        InformationUI.GoldText.text = gold.ToString();
+    }
+
+    public void TakeGold(float value)
+    {
+        if (gold < value)
+        {
+            TextManager.PushLog("ゴールドが足りません!!");
+            return;
+        }
+        gold -= value;
+        InformationUI.GoldText.text = gold.ToString();
     }
 }

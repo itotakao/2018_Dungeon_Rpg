@@ -29,6 +29,8 @@ public class BattleManager : MonoBehaviour
     public Monster CurrentMonster { get; private set; }
     public Monster[] MonsterList;
 
+    float playerAttackIntervalTime = 0;
+
     Tweener attackEffectTween = null;
     Tweener damageEffectTween = null;
 
@@ -65,19 +67,19 @@ public class BattleManager : MonoBehaviour
 
     public void OnBattleButton()
     {
-        AttackEffect(PlayerManager.Attack, Color.red);
-        CurrentMonster.Damage(PlayerManager.Attack);
+        AttackEffect(PlayerManager.GetAttack(), Color.red);
+        CurrentMonster.Damage(PlayerManager.GetAttack());
         BattleUI.HealthSlider.value = CurrentMonster.GetHealth();
-        DamageEffect(PlayerManager.Attack, Color.yellow);
+        DamageEffect(PlayerManager.GetAttack(), Color.yellow);
 
     }
 
     public bool CheckPlayerAttack()
     {
-        PlayerManager.AttackGauge -= PlayerManager.Speed * Time.deltaTime;
-        if (PlayerManager.AttackGauge <= 0)
+        playerAttackIntervalTime += PlayerManager.GetSpeed() * Time.deltaTime;
+        if (playerAttackIntervalTime > PlayerManager.GetAttackInterval())
         {
-            PlayerManager.AttackGauge = 100f;
+            playerAttackIntervalTime = 0;
             return true;
         }
         return false;
@@ -96,18 +98,18 @@ public class BattleManager : MonoBehaviour
 
     public void OnPlayerBattle()
     {
-        AttackEffect(PlayerManager.Attack, Color.red);
-        CurrentMonster.Damage(PlayerManager.Attack);
+        AttackEffect(PlayerManager.GetAttack(), Color.red);
+        CurrentMonster.Damage(PlayerManager.GetAttack());
         BattleUI.HealthSlider.value = CurrentMonster.GetHealth();
 
-        TextManager.PushLog(string.Format("<color=green>{0}ダメージ 与えた</color>", PlayerManager.Attack));
+        TextManager.PushLog(string.Format("<color=green>{0}ダメージ 与えた</color>", PlayerManager.GetAttack()));
     }
 
     public void OnEnemyBattle()
     {
         DamageEffect(CurrentMonster.GetAttack(), Color.yellow);
 
-        PlayerManager.Health -= CurrentMonster.GetAttack();
+        PlayerManager.Damage(CurrentMonster.GetAttack());
         TextManager.PushLog(string.Format("<color=red>体力{0}ダメージ</color>", CurrentMonster.GetAttack()));
     }
 
@@ -144,7 +146,7 @@ public class BattleManager : MonoBehaviour
     public void ExitBattle()
     {
         LotteryDropItem(CurrentMonster);
-        PlayerManager.Gold = CurrentMonster.GetGold();
+        PlayerManager.AddGold(CurrentMonster.GetGold());
     }
 
     public void Reflesh()

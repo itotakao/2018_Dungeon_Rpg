@@ -12,7 +12,7 @@ namespace Ito
 
         State Transition()
         {
-            if (PlayerManager.Health <= 0) { ReloadScene(); }
+            if (PlayerManager.GetHealth() <= 0) { ReloadScene(); }
 
             if (BattleManager.CurrentMonster.GetHealth() <= 0) { return new GameRefleshState(StateMachine); }
 
