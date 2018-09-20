@@ -72,36 +72,46 @@ public class BattleManager : MonoBehaviour
 
     }
 
-    public void OnPlayerBattle()
+    public bool CheckPlayerAttack()
     {
         PlayerManager.AttackGauge -= PlayerManager.Speed * Time.deltaTime;
         if (PlayerManager.AttackGauge <= 0)
         {
             PlayerManager.AttackGauge = 100f;
-
-            AttackEffect(PlayerManager.Attack, Color.red);
-            CurrentMonster.Damage(PlayerManager.Attack);
-            BattleUI.HealthSlider.value = CurrentMonster.GetHealth();
-
-            TextManager.PushLog(string.Format("<color=green>{0}ダメージ 与えた</color>", PlayerManager.Attack));
+            return true;
         }
+        return false;
     }
 
-    public void OnEnemyBattle()
+    public bool CheckEnemyAttack()
     {
-        // TODO : マジックナンバー
         BattleUI.AttackSlider.value -= CurrentMonster.GetSpeed() * Time.deltaTime;
         if (BattleUI.AttackSlider.value <= 0)
         {
             BattleUI.AttackSlider.value = BattleUI.AttackSlider.maxValue;
-            DamageEffect(CurrentMonster.GetAttack(), Color.yellow);
-
-            PlayerManager.Health -= CurrentMonster.GetAttack();
-            TextManager.PushLog(string.Format("<color=red>体力{0}ダメージ</color>", CurrentMonster.GetAttack()));
+            return true;
         }
+        return false;
     }
 
-    void AttackEffect(float attackValue,Color textColor)
+    public void OnPlayerBattle()
+    {
+        AttackEffect(PlayerManager.Attack, Color.red);
+        CurrentMonster.Damage(PlayerManager.Attack);
+        BattleUI.HealthSlider.value = CurrentMonster.GetHealth();
+
+        TextManager.PushLog(string.Format("<color=green>{0}ダメージ 与えた</color>", PlayerManager.Attack));
+    }
+
+    public void OnEnemyBattle()
+    {
+        DamageEffect(CurrentMonster.GetAttack(), Color.yellow);
+
+        PlayerManager.Health -= CurrentMonster.GetAttack();
+        TextManager.PushLog(string.Format("<color=red>体力{0}ダメージ</color>", CurrentMonster.GetAttack()));
+    }
+
+    void AttackEffect(float attackValue, Color textColor)
     {
         GameManager.IsAnimation = true;
 
