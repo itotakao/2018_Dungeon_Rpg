@@ -104,7 +104,7 @@ public class ItemManager : MonoBehaviour
         switch (item.GetStatus())
         {
             case Item.Status.HP:
-                PlayerManager.Health += item.GetValue();
+                PlayerManager.Heal(item.GetValue());
                 break;
             case Item.Status.Attack:
                 break;

@@ -21,12 +21,12 @@ public class Monster : ScriptableObject
     private float maxHealth;
     private float healthCache;
     private float health
-    { 
+    {
         get { return healthCache; }
-        set 
-        { 
+        set
+        {
             healthCache = value;
-            if(healthCache > maxHealth){ healthCache = maxHealth; }
+            if (healthCache > maxHealth) { healthCache = maxHealth; }
             if (healthCache < 0) { healthCache = 0; }
         }
     }
@@ -47,7 +47,8 @@ public class Monster : ScriptableObject
     [SerializeField]
     private float rareDropLate;
 
-    public void Initilize(){
+    public void Initilize()
+    {
         health = maxHealth;
     }
 
@@ -114,7 +115,8 @@ public class Monster : ScriptableObject
         return rand <= rareDropLate ? true : false;
     }
 
-    public void Damage(float value){
+    public void Damage(float value)
+    {
         health -= value;
     }
 }

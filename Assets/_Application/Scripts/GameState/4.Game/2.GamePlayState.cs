@@ -12,7 +12,7 @@ namespace Ito
 
         State Transition()
         {
-            if (PlayerManager.Health <= 0) { ReloadScene(); }
+            if (PlayerManager.GetHealth() <= 0) { ReloadScene(); }
 
             if (BattleManager.CurrentMonster.GetHealth() <= 0) { return new GameRefleshState(StateMachine); }
 
@@ -35,19 +35,24 @@ namespace Ito
             StartCoroutine(CoPlaying());
         }
 
-        IEnumerator CoPlaying(){
+        IEnumerator CoPlaying()
+        {
             while (true)
             {
                 yield return new WaitUntil(() => !GameManager.IsAnimation);
-                if(BattleManager.OnPlayerBattleEvent != null)
+
+                if (BattleManager.CheckPlayerAttack())
                 {
-                    BattleManager.OnPlayerBattleEvent();
+                    if (BattleManager.OnPlayerBattleEvent != null) { BattleManager.OnPlayerBattleEvent(); }
                 }
+
                 yield return new WaitUntil(() => !GameManager.IsAnimation);
-                if (BattleManager.OnEnemyBattleEvent != null)
+
+                if (BattleManager.CheckEnemyAttack())
                 {
-                    BattleManager.OnEnemyBattleEvent();
+                    if (BattleManager.OnEnemyBattleEvent != null) { BattleManager.OnEnemyBattleEvent(); }
                 }
+
                 yield return null;
             }
         }

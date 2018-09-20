@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
+//TODO : 役割持たせすぎ　分割する必要あり
 public class BattleManager : MonoBehaviour
 {
     public static BattleManager Current { get; private set; }
 
     public PlayerManager PlayerManager { get { return PlayerManager.Current; } }
     public ItemManager ItemManager { get { return ItemManager.Current; } }
-    public LogManager LogManager { get { return LogManager.Current; } }
-    public GameManager GameManager{ get { return GameManager.Current; }}
+    public TextManager TextManager { get { return TextManager.Current; } }
+    public GameManager GameManager { get { return GameManager.Current; } }
     public BattleUI BattleUI { get { return BattleUI.Current; } }
 
     public delegate void PlayEnterEvent();
@@ -28,6 +29,11 @@ public class BattleManager : MonoBehaviour
     public Monster CurrentMonster { get; private set; }
     public Monster[] MonsterList;
 
+    float playerAttackIntervalTime = 0;
+
+    Tweener attackEffectTween = null;
+    Tweener damageEffectTween = null;
+
     void Awake()
     {
         Current = this;
@@ -44,7 +50,8 @@ public class BattleManager : MonoBehaviour
         CurrentMonster = GetRandamMonster();
         CurrentMonster.Initilize();
         BattleUI.MonsterImage.sprite = CurrentMonster.GetIcon();
-        BattleUI.EventText.text = CurrentMonster.GetHealth().ToString();
+        BattleUI.HealthSlider.maxValue = CurrentMonster.GetMaxHealth();
+        BattleUI.HealthSlider.value = CurrentMonster.GetHealth();
     }
 
     public Monster GetRandamMonster()
@@ -58,53 +65,88 @@ public class BattleManager : MonoBehaviour
         if (monster.LotteryRarelItem()) { ItemManager.AddItem(monster.GetRareDropItem()); }
     }
 
-    public void Battle()
+    public void OnBattleButton()
     {
-        //TODO : 要カプセル化
-        BattleUI.BattleAnimator.SetTrigger("OnAttack");
+        AttackEffect(PlayerManager.GetAttack(), Color.red);
+        CurrentMonster.Damage(PlayerManager.GetAttack());
+        BattleUI.HealthSlider.value = CurrentMonster.GetHealth();
+        DamageEffect(PlayerManager.GetAttack(), Color.yellow);
 
-        CurrentMonster.Damage(PlayerManager.Attack);
-        BattleUI.EventText.text = CurrentMonster.GetHealth().ToString();
+    }
 
+    public bool CheckPlayerAttack()
+    {
+        playerAttackIntervalTime += PlayerManager.GetSpeed() * Time.deltaTime;
+        if (playerAttackIntervalTime > PlayerManager.GetAttackInterval())
+        {
+            playerAttackIntervalTime = 0;
+            return true;
+        }
+        return false;
+    }
+
+    public bool CheckEnemyAttack()
+    {
+        BattleUI.AttackSlider.value -= CurrentMonster.GetSpeed() * Time.deltaTime;
+        if (0 >= BattleUI.AttackSlider.value )
+        {
+            BattleUI.AttackSlider.value = BattleUI.AttackSlider.maxValue;
+            return true;
+        }
+        return false;
     }
 
     public void OnPlayerBattle()
     {
-        PlayerManager.AttackGauge -= PlayerManager.Speed * Time.deltaTime;
-        if (PlayerManager.AttackGauge <= 0)
-        {
-            PlayerManager.AttackGauge = 100f;
-            GameManager.IsAnimation = true;
-            //TODO : 要カプセル化
-            BattleUI.MonsterImage.transform.DOShakeScale(0.1f).OnComplete(()=> { GameManager.IsAnimation = false; });
-            BattleUI.BattleAnimator.SetTrigger("OnAttack");
+        AttackEffect(PlayerManager.GetAttack(), Color.red);
+        CurrentMonster.Damage(PlayerManager.GetAttack());
+        BattleUI.HealthSlider.value = CurrentMonster.GetHealth();
 
-            CurrentMonster.Damage(PlayerManager.Attack);
-            BattleUI.EventText.text = CurrentMonster.GetHealth().ToString();
-
-            LogManager.Push(string.Format("<color=green>{0}ダメージ 与えた</color>",PlayerManager.Attack));
-        }
+        TextManager.PushLog(string.Format("<color=green>{0}ダメージ 与えた</color>", PlayerManager.GetAttack()));
     }
 
     public void OnEnemyBattle()
     {
-        // TODO : マジックナンバー
-        BattleUI.AttackSlider.value -= CurrentMonster.GetSpeed() * Time.deltaTime;
-        if (BattleUI.AttackSlider.value <= 0)
-        {
-            GameManager.IsAnimation = true;
-            BattleUI.AttackSlider.value = BattleUI.AttackSlider.maxValue;
-            BattleUI.MonsterImage.transform.DOPunchScale(new Vector3(1.5f, 1.5f), 0.1f).OnComplete(() => { GameManager.IsAnimation = false; });
+        DamageEffect(CurrentMonster.GetAttack(), Color.yellow);
 
-            PlayerManager.Health -= 20;
-            LogManager.Push("<color=red>体力40ダメージ</color>");
-        }
+        PlayerManager.Damage(CurrentMonster.GetAttack());
+        TextManager.PushLog(string.Format("<color=red>体力{0}ダメージ</color>", CurrentMonster.GetAttack()));
+    }
+
+    void AttackEffect(float attackValue, Color textColor)
+    {
+        GameManager.IsAnimation = true;
+
+        attackEffectTween.Kill();
+        attackEffectTween = BattleUI.MonsterImage.transform.DOShakeScale(0.1f).OnComplete(() => { GameManager.IsAnimation = false; });
+
+        BattleUI.BattleAnimator.SetTrigger("OnAttack");
+
+        TextManager.PopUpText(attackValue.ToString(), textColor);
+    }
+
+    void DamageEffect(float damageValue, Color textColor)
+    {
+        GameManager.IsAnimation = true;
+
+        damageEffectTween.Kill();
+        damageEffectTween = BattleUI.MonsterImage.transform.DOScale(new Vector3(1.1f, 1.1f), 0.1f)
+                    .OnComplete(() =>
+                    {
+                        BattleUI.MonsterImage.transform.localScale = Vector3.one;
+                        GameManager.IsAnimation = false;
+                    });
+        ///
+        // TODO : ダメージ演出を入れる
+        ///
+
+        TextManager.PopUpText(damageValue.ToString(), textColor);
     }
 
     public void ExitBattle()
     {
         LotteryDropItem(CurrentMonster);
-        PlayerManager.Gold = CurrentMonster.GetGold();
+        PlayerManager.AddGold(CurrentMonster.GetGold());
     }
 
     public void Reflesh()
