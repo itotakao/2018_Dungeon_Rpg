@@ -114,7 +114,8 @@ public class Monster : ScriptableObject
         return rand <= rareDropLate ? true : false;
     }
 
-    public void Damage(float value){
+    public void Damage(float value)
+    {
         health -= value;
     }
 }
