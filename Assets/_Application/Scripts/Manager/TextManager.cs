@@ -14,6 +14,8 @@ public class TextManager : MonoBehaviour
     public int MaxLog = 4;
     public List<string> LogList;
 
+    Tweener popUpTween = null;
+
     void Awake()
     {
         Current = this;
@@ -41,10 +43,17 @@ public class TextManager : MonoBehaviour
         TextUI.LogText.text = "";
     }
 
-    public void PopUpText(string text)
+    // TODO : 複数表示するできるようにする
+    public void PopUpText(string text ,Color color)
     {
+        popUpTween.Kill();
+
         TextUI.popUpText.text = text;
-        TextUI.popUpText.transform.localPosition = new Vector3(UnityEngine.Random.Range(-10f, 10f), UnityEngine.Random.Range(-10f, 10f), 0);
-        TextUI.popUpText.transform.DOLocalMove(new Vector3(TextUI.popUpText.transform.localPosition.x, TextUI.popUpText.transform.localPosition.y +10, TextUI.popUpText.transform.localPosition.z), 1f).OnComplete(() => { TextUI.popUpText.text = null; });
+        TextUI.popUpText.color = color;
+
+        TextUI.popUpText.transform.localPosition = new Vector3(Random.Range(-10f, 10f), Random.Range(-10f, 10f), 0);
+
+        popUpTween = TextUI.popUpText.transform.DOLocalMove(new Vector3(TextUI.popUpText.transform.localPosition.x, TextUI.popUpText.transform.localPosition.y +10, TextUI.popUpText.transform.localPosition.z), 1.0f)
+              .OnComplete(() => { TextUI.popUpText.text = null; });
     }
 }

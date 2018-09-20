@@ -83,7 +83,7 @@ public class BattleManager : MonoBehaviour
             CurrentMonster.Damage(PlayerManager.Attack);
             BattleUI.EventText.text = CurrentMonster.GetHealth().ToString();
 
-            TextManager.PopUpText(PlayerManager.Attack.ToString());
+            TextManager.PopUpText(PlayerManager.Attack.ToString(),Color.red);
             TextManager.PushLog(string.Format("<color=green>{0}ダメージ 与えた</color>",PlayerManager.Attack));
         }
     }
@@ -98,8 +98,10 @@ public class BattleManager : MonoBehaviour
             BattleUI.AttackSlider.value = BattleUI.AttackSlider.maxValue;
             BattleUI.MonsterImage.transform.DOPunchScale(new Vector3(1.5f, 1.5f), 0.1f).OnComplete(() => { GameManager.IsAnimation = false; });
 
-            PlayerManager.Health -= 20;
-            TextManager.PushLog("<color=red>体力40ダメージ</color>");
+            TextManager.PopUpText(CurrentMonster.GetAttack().ToString(), Color.yellow);
+
+            PlayerManager.Health -= CurrentMonster.GetAttack();
+            TextManager.PushLog(string.Format("<color=red>体力{0}ダメージ</color>",CurrentMonster.GetAttack()));
         }
     }
 
