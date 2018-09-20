@@ -26,6 +26,8 @@ public class BattleManager : MonoBehaviour
     //public delegate void ButtonAction();
     //public static event ButtonAction OnButtonEvent;
 
+    public Sprite nullImage = null;
+
     public Monster CurrentMonster { get; private set; }
     public Monster[] MonsterList;
 
