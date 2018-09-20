@@ -146,5 +146,6 @@ public class BattleManager : MonoBehaviour
     public void Reflesh()
     {
         BattleUI.AttackSlider.value = BattleUI.AttackSlider.maxValue;
+        BattleUI.BattleAnimator.SetBool("OnAttack", false);
     }
 }
