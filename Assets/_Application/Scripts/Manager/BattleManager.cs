@@ -29,6 +29,7 @@ public class BattleManager : MonoBehaviour
     public Monster CurrentMonster { get; private set; }
     public Monster[] MonsterList;
 
+    Tweener attackEffectTween = null;
     Tweener damageEffectTween = null;
 
     void Awake()
@@ -64,9 +65,7 @@ public class BattleManager : MonoBehaviour
 
     public void Battle()
     {
-        //TODO : 要カプセル化
-        BattleUI.BattleAnimator.SetTrigger("OnAttack");
-
+        AttackEffect(PlayerManager.Attack, Color.red);
         CurrentMonster.Damage(PlayerManager.Attack);
         BattleUI.HealthSlider.value = CurrentMonster.GetHealth();
         DamageEffect(PlayerManager.Attack, Color.yellow);
@@ -79,15 +78,10 @@ public class BattleManager : MonoBehaviour
         if (PlayerManager.AttackGauge <= 0)
         {
             PlayerManager.AttackGauge = 100f;
-            GameManager.IsAnimation = true;
-            //TODO : 要カプセル化
-            BattleUI.MonsterImage.transform.DOShakeScale(0.1f).OnComplete(() => { GameManager.IsAnimation = false; });
-            BattleUI.BattleAnimator.SetTrigger("OnAttack");
 
+            AttackEffect(PlayerManager.Attack, Color.red);
             CurrentMonster.Damage(PlayerManager.Attack);
             BattleUI.HealthSlider.value = CurrentMonster.GetHealth();
-
-            DamageEffect(PlayerManager.Attack, Color.red);
 
             TextManager.PushLog(string.Format("<color=green>{0}ダメージ 与えた</color>", PlayerManager.Attack));
         }
@@ -99,15 +93,7 @@ public class BattleManager : MonoBehaviour
         BattleUI.AttackSlider.value -= CurrentMonster.GetSpeed() * Time.deltaTime;
         if (BattleUI.AttackSlider.value <= 0)
         {
-            GameManager.IsAnimation = true;
             BattleUI.AttackSlider.value = BattleUI.AttackSlider.maxValue;
-            BattleUI.MonsterImage.transform.DOScale(new Vector3(1.1f, 1.1f), 0.1f)
-                    .OnComplete(() =>
-                    {
-                        BattleUI.MonsterImage.transform.localScale = Vector3.one;
-                        GameManager.IsAnimation = false;
-                    });
-
             DamageEffect(CurrentMonster.GetAttack(), Color.yellow);
 
             PlayerManager.Health -= CurrentMonster.GetAttack();
@@ -115,10 +101,34 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    public void DamageEffect(float damage, Color textColor)
+    void AttackEffect(float attackValue,Color textColor)
     {
+        GameManager.IsAnimation = true;
+
+        attackEffectTween.Kill();
+        attackEffectTween = BattleUI.MonsterImage.transform.DOShakeScale(0.1f).OnComplete(() => { GameManager.IsAnimation = false; });
+
+        BattleUI.BattleAnimator.SetTrigger("OnAttack");
+
+        TextManager.PopUpText(attackValue.ToString(), textColor);
+    }
+
+    void DamageEffect(float damageValue, Color textColor)
+    {
+        GameManager.IsAnimation = true;
+
         damageEffectTween.Kill();
-        TextManager.PopUpText(damage.ToString(), textColor);
+        damageEffectTween = BattleUI.MonsterImage.transform.DOScale(new Vector3(1.1f, 1.1f), 0.1f)
+                    .OnComplete(() =>
+                    {
+                        BattleUI.MonsterImage.transform.localScale = Vector3.one;
+                        GameManager.IsAnimation = false;
+                    });
+        ///
+        // TODO : ダメージ演出を入れる
+        ///
+
+        TextManager.PopUpText(damageValue.ToString(), textColor);
     }
 
     public void ExitBattle()
