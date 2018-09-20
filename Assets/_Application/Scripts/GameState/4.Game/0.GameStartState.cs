@@ -27,6 +27,18 @@ namespace Ito
             TitleUI.Show(false);
             GameUI.Show(true);
 
+            StartCoroutine(CoTransitionEffect());
+
+        }
+
+        IEnumerator CoTransitionEffect()
+        {
+            FadeManager.isFadeOut = true;
+
+            yield return new WaitForSeconds(2);
+
+            FadeManager.isFadeIn = true;
+
             isFinish = true;
         }
 

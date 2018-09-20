@@ -28,15 +28,13 @@ namespace Ito
 
         IEnumerator CoReflesh()
         {
-            FadeManager.isFadeOut = true;
+            BattleUI.Show(false);
+
+            yield return new WaitForSeconds(2);
+
+            BattleUI.Show(true);
             TurnManager.AddTurn();
-
-            yield return new WaitForSeconds(2);
-
-            FadeManager.isFadeIn = true;
             BattleManager.CallRandamMonster();
-
-            yield return new WaitForSeconds(2);
 
             isFinish = true;
         }

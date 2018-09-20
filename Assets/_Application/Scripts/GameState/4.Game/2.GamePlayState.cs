@@ -26,7 +26,6 @@ namespace Ito
             BattleManager.OnPlayerBattleEvent += BattleManager.OnPlayerBattle;
             BattleManager.OnEnemyBattleEvent += BattleManager.OnEnemyBattle;
 
-
             //if (BattleManager.OnPlayEnterEvent != null)
             //{
             //    BattleManager.OnPlayEnterEvent();

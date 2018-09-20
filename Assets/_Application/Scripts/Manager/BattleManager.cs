@@ -41,12 +41,6 @@ public class BattleManager : MonoBehaviour
         Current = this;
     }
 
-    public void ShowBattleUI(bool show)
-    {
-        BattleUI.BattleButton.enabled = show;
-        BattleUI.EscapeButton.enabled = show;
-    }
-
     public void CallRandamMonster()
     {
         CurrentMonster = GetRandamMonster();

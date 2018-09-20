@@ -19,8 +19,21 @@ public class BattleUI : MonoBehaviour
         Current = this;
     }
 
+    void Start()
+    {
+        Show(false);
+    }
+
     public void Reset()
     {
         MonsterImage.sprite = null;
+    }
+
+    public void Show(bool isShow)
+    {
+        MonsterImage.enabled = isShow;
+        MonsterImage.enabled = isShow;
+        HealthSlider.gameObject.SetActive(isShow);
+        AttackSlider.gameObject.SetActive(isShow);
     }
 }
