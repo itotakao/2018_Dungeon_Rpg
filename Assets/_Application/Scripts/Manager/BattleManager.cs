@@ -11,7 +11,7 @@ public class BattleManager : MonoBehaviour
     public PlayerManager PlayerManager { get { return PlayerManager.Current; } }
     public ItemManager ItemManager { get { return ItemManager.Current; } }
     public TextManager TextManager { get { return TextManager.Current; } }
-    public GameManager GameManager{ get { return GameManager.Current; }}
+    public GameManager GameManager { get { return GameManager.Current; } }
     public BattleUI BattleUI { get { return BattleUI.Current; } }
 
     public delegate void PlayEnterEvent();
@@ -81,7 +81,7 @@ public class BattleManager : MonoBehaviour
             PlayerManager.AttackGauge = 100f;
             GameManager.IsAnimation = true;
             //TODO : 要カプセル化
-            BattleUI.MonsterImage.transform.DOShakeScale(0.1f).OnComplete(()=> { GameManager.IsAnimation = false; });
+            BattleUI.MonsterImage.transform.DOShakeScale(0.1f).OnComplete(() => { GameManager.IsAnimation = false; });
             BattleUI.BattleAnimator.SetTrigger("OnAttack");
 
             CurrentMonster.Damage(PlayerManager.Attack);
@@ -89,7 +89,7 @@ public class BattleManager : MonoBehaviour
 
             DamageEffect(PlayerManager.Attack, Color.red);
 
-            TextManager.PushLog(string.Format("<color=green>{0}ダメージ 与えた</color>",PlayerManager.Attack));
+            TextManager.PushLog(string.Format("<color=green>{0}ダメージ 与えた</color>", PlayerManager.Attack));
         }
     }
 
@@ -101,16 +101,22 @@ public class BattleManager : MonoBehaviour
         {
             GameManager.IsAnimation = true;
             BattleUI.AttackSlider.value = BattleUI.AttackSlider.maxValue;
-            BattleUI.MonsterImage.transform.DOPunchScale(new Vector3(1.5f, 1.5f), 0.1f).OnComplete(() => { GameManager.IsAnimation = false; });
+            BattleUI.MonsterImage.transform.DOScale(new Vector3(1.1f, 1.1f), 0.1f)
+                    .OnComplete(() =>
+                    {
+                        BattleUI.MonsterImage.transform.localScale = Vector3.one;
+                        GameManager.IsAnimation = false;
+                    });
 
             DamageEffect(CurrentMonster.GetAttack(), Color.yellow);
 
             PlayerManager.Health -= CurrentMonster.GetAttack();
-            TextManager.PushLog(string.Format("<color=red>体力{0}ダメージ</color>",CurrentMonster.GetAttack()));
+            TextManager.PushLog(string.Format("<color=red>体力{0}ダメージ</color>", CurrentMonster.GetAttack()));
         }
     }
 
-    public void DamageEffect(float damage,Color textColor){
+    public void DamageEffect(float damage, Color textColor)
+    {
         damageEffectTween.Kill();
         TextManager.PopUpText(damage.ToString(), textColor);
     }
