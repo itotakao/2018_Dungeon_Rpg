@@ -19,8 +19,11 @@ public class PlayerManager : MonoBehaviour
         set
         {
             maxHealthCache = value;
+
+            HealthUI.HealthBar.maxValue = maxHealthCache;
         }
     }
+
     float healthCache;
     float health
     {
@@ -30,6 +33,8 @@ public class PlayerManager : MonoBehaviour
             healthCache = value;
             HealthUI.HealthBar.value = healthCache;
             if (healthCache > maxHealth) { healthCache = maxHealth; }
+
+            HealthUI.HealthBar.value = healthCache;
         }
     }
 
@@ -43,15 +48,19 @@ public class PlayerManager : MonoBehaviour
             goldCache = value;
             if (goldCache < 0) { goldCache = 0; }
 
+            InformationUI.GoldText.text = goldCache.ToString();
         }
     }
 
     [SerializeField]
     float attack = 50.0f;
+
     [SerializeField]
     float defence = 20.0f;
+
     [SerializeField]
     float speed = 100.0f;
+
     [SerializeField]
     float attackInterval = 100.0f;
 
@@ -111,15 +120,12 @@ public class PlayerManager : MonoBehaviour
     public void SetMaxHealth(float value)
     {
         maxHealth = value;
-        HealthUI.HealthBar.maxValue = maxHealth;
-
         if (health > maxHealth) { SetHealth(maxHealth); }
     }
 
     public void SetHealth(float value)
     {
         health = value;
-        HealthUI.HealthBar.value = health;
     }
 
     public void SetAttackInterval(float value)
@@ -140,7 +146,6 @@ public class PlayerManager : MonoBehaviour
     public void AddGold(float value)
     {
         gold += value;
-        InformationUI.GoldText.text = gold.ToString();
     }
 
     public void TakeGold(float value)
@@ -151,6 +156,5 @@ public class PlayerManager : MonoBehaviour
             return;
         }
         gold -= value;
-        InformationUI.GoldText.text = gold.ToString();
     }
 }
