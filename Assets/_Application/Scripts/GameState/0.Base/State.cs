@@ -55,10 +55,10 @@ namespace Ito
 
         public override void OnStateUpdate()
         {
-            //if (Input.GetKeyDown(KeyCode.R))
-            //{
-            //    ReloadScene();
-            //}
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                ReloadScene();
+            }
 
             //if (Input.GetKeyDown(KeyCode.Escape))
             //{
