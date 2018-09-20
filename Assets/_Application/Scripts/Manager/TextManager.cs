@@ -44,7 +44,7 @@ public class TextManager : MonoBehaviour
     }
 
     // TODO : 複数表示するできるようにする
-    public void PopUpText(string text ,Color color)
+    public void PopUpText(string text, Color color)
     {
         popUpTween.Kill();
 
@@ -53,7 +53,7 @@ public class TextManager : MonoBehaviour
 
         TextUI.popUpText.transform.localPosition = new Vector3(Random.Range(-10f, 10f), Random.Range(-10f, 10f), 0);
 
-        popUpTween = TextUI.popUpText.transform.DOLocalMove(new Vector3(TextUI.popUpText.transform.localPosition.x, TextUI.popUpText.transform.localPosition.y +10, TextUI.popUpText.transform.localPosition.z), 1.0f)
+        popUpTween = TextUI.popUpText.transform.DOLocalMove(new Vector3(TextUI.popUpText.transform.localPosition.x, TextUI.popUpText.transform.localPosition.y + 10, TextUI.popUpText.transform.localPosition.z), 1.0f)
               .OnComplete(() => { TextUI.popUpText.text = null; });
     }
 }
