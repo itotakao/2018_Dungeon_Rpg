@@ -70,10 +70,10 @@ public class BattleManager : MonoBehaviour
 
     public bool CheckPlayerAttack()
     {
-        playerAttackIntervalTime += PlayerManager.GetSpeed() * Time.deltaTime;
-        if (playerAttackIntervalTime > PlayerManager.GetAttackInterval())
+        BattleUI.PlayerAttackSlider.value += PlayerManager.GetSpeed() * Time.deltaTime;
+        if (BattleUI.PlayerAttackSlider.value >= BattleUI.PlayerAttackSlider.maxValue)
         {
-            playerAttackIntervalTime = 0;
+            BattleUI.PlayerAttackSlider.value = 0;
             return true;
         }
         return false;

@@ -59,10 +59,30 @@ public class PlayerManager : MonoBehaviour
     float defence = 20.0f;
 
     [SerializeField]
-    float speed = 100.0f;
+    float speedChache = 100.0f;
+    float speed
+    {
+        get { return speedChache; }
+        set
+        {
+            speedChache = value;
+            if (speedChache < 1) { speedChache = 1; }
+        }
+    }
 
     [SerializeField]
-    float attackInterval = 100.0f;
+    float attackIntervalCache = 100.0f;
+    float attackInterval
+    {
+        get { return attackIntervalCache; }
+        set
+        {
+            attackInterval = value;
+            if (attackIntervalCache < 1) { attackIntervalCache = 1; }
+
+            BattleUI.PlayerAttackSlider.maxValue = attackIntervalCache;
+        }
+    }
 
     void Awake()
     {
@@ -71,7 +91,9 @@ public class PlayerManager : MonoBehaviour
 
     public void Initilize()
     {
-        maxHealth = maxHealth;
+        BattleUI.PlayerHealthSlider.maxValue = maxHealth;
+        BattleUI.PlayerAttackSlider.maxValue = attackInterval;
+
         health = maxHealth;
         gold = 0;
     }
