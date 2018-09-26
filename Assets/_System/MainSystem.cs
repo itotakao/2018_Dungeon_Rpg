@@ -10,7 +10,7 @@ namespace Ito
         StateMachine stateMachine;
 
         [SerializeField]
-        GameObject[] sceneList;
+        GameObject[] sceneList = null;
 
         void Awake()
         {

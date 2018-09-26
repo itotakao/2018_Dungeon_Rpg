@@ -27,9 +27,7 @@ public class BattleManager : MonoBehaviour
     //public static event ButtonAction OnButtonEvent;
 
     public Monster CurrentMonster { get; private set; }
-    public Monster[] MonsterList;
-
-    float playerAttackIntervalTime = 0;
+    public Monster[] MonsterList = null;
 
     Tweener attackEffectTween = null;
     Tweener damageEffectTween = null;
@@ -145,7 +143,8 @@ public class BattleManager : MonoBehaviour
 
     public void Reflesh()
     {
-        BattleUI.MonsterAttackSlider.value = BattleUI.MonsterAttackSlider.maxValue;
+        BattleUI.MonsterAttackSlider.value = 0;
+        BattleUI.PlayerAttackSlider.value = BattleUI.PlayerAttackSlider.maxValue;
         BattleUI.BattleAnimator.SetBool("OnAttack", false);
     }
 }
