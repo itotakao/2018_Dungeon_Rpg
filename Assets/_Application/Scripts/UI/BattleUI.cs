@@ -7,9 +7,16 @@ public class BattleUI : MonoBehaviour
 {
     public static BattleUI Current { get; private set; }
 
+    // TODO : まとめすぎ　分けないと後で困りそう
+    public Text PlayerNameText = null;
+    public Image PlayerImage = null;
+    public Slider PlayerHealthSlider = null;
+    public Slider PlayerAttackSlider = null;
+
     public Image MonsterImage = null;
-    public Slider HealthSlider = null;
-    public Slider AttackSlider = null;
+    public Slider MonsterHealthSlider = null;
+    public Slider MonsterAttackSlider = null;
+
     public Animator BattleAnimator = null;
     public Button BattleButton = null;
     public Button EscapeButton = null;
@@ -33,7 +40,7 @@ public class BattleUI : MonoBehaviour
     {
         MonsterImage.enabled = isShow;
         MonsterImage.enabled = isShow;
-        HealthSlider.gameObject.SetActive(isShow);
-        AttackSlider.gameObject.SetActive(isShow);
+        MonsterHealthSlider.gameObject.SetActive(isShow);
+        MonsterAttackSlider.gameObject.SetActive(isShow);
     }
 }

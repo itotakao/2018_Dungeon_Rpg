@@ -44,8 +44,8 @@ public class BattleManager : MonoBehaviour
         CurrentMonster = GetRandamMonster();
         CurrentMonster.Initilize();
         BattleUI.MonsterImage.sprite = CurrentMonster.GetIcon();
-        BattleUI.HealthSlider.maxValue = CurrentMonster.GetMaxHealth();
-        BattleUI.HealthSlider.value = CurrentMonster.GetHealth();
+        BattleUI.MonsterHealthSlider.maxValue = CurrentMonster.GetMaxHealth();
+        BattleUI.MonsterHealthSlider.value = CurrentMonster.GetHealth();
     }
 
     public Monster GetRandamMonster()
@@ -63,7 +63,7 @@ public class BattleManager : MonoBehaviour
     {
         AttackEffect(PlayerManager.GetAttack(), Color.red);
         CurrentMonster.Damage(PlayerManager.GetAttack());
-        BattleUI.HealthSlider.value = CurrentMonster.GetHealth();
+        BattleUI.MonsterHealthSlider.value = CurrentMonster.GetHealth();
         DamageEffect(PlayerManager.GetAttack(), Color.yellow);
 
     }
@@ -81,10 +81,10 @@ public class BattleManager : MonoBehaviour
 
     public bool CheckEnemyAttack()
     {
-        BattleUI.AttackSlider.value += CurrentMonster.GetSpeed() * Time.deltaTime;
-        if (BattleUI.AttackSlider.value >= BattleUI.AttackSlider.maxValue)
+        BattleUI.MonsterAttackSlider.value += CurrentMonster.GetSpeed() * Time.deltaTime;
+        if (BattleUI.MonsterAttackSlider.value >= BattleUI.MonsterAttackSlider.maxValue)
         {
-            BattleUI.AttackSlider.value = 0;
+            BattleUI.MonsterAttackSlider.value = 0;
             return true;
         }
         return false;
@@ -94,7 +94,7 @@ public class BattleManager : MonoBehaviour
     {
         AttackEffect(PlayerManager.GetAttack(), Color.red);
         CurrentMonster.Damage(PlayerManager.GetAttack());
-        BattleUI.HealthSlider.value = CurrentMonster.GetHealth();
+        BattleUI.MonsterHealthSlider.value = CurrentMonster.GetHealth();
 
         TextManager.PushLog(string.Format("<color=green>{0}ダメージ 与えた</color>", PlayerManager.GetAttack()));
     }
@@ -145,7 +145,7 @@ public class BattleManager : MonoBehaviour
 
     public void Reflesh()
     {
-        BattleUI.AttackSlider.value = BattleUI.AttackSlider.maxValue;
+        BattleUI.MonsterAttackSlider.value = BattleUI.MonsterAttackSlider.maxValue;
         BattleUI.BattleAnimator.SetBool("OnAttack", false);
     }
 }
