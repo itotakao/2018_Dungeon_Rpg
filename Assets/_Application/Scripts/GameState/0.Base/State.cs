@@ -11,6 +11,7 @@ namespace Ito
         public TitleUI TitleUI { get { return TitleUI.Current; } }
         public MenuUI MenuUI { get { return MenuUI.Current; } }
         public GameUI GameUI { get { return GameUI.Current; } }
+        public BattleUI BattleUI{ get { return BattleUI.Current; }}
         public ResultUI ResultUI { get { return ResultUI.Current; } }
         public BattleUI EventUI{ get { return BattleUI.Current; }}
 

@@ -8,7 +8,7 @@ public class PlayerManager : MonoBehaviour
     public static PlayerManager Current { get; private set; }
 
     public TextManager TextManager { get { return TextManager.Current; } }
-    public HealthUI HealthUI { get { return HealthUI.Current; } }
+    public BattleUI BattleUI { get { return BattleUI.Current; } }
     public InformationUI InformationUI { get { return InformationUI.Current; } }
 
     [SerializeField]
@@ -20,7 +20,7 @@ public class PlayerManager : MonoBehaviour
         {
             maxHealthCache = value;
 
-            HealthUI.HealthBar.maxValue = maxHealthCache;
+            BattleUI.PlayerHealthSlider.maxValue = maxHealthCache;
         }
     }
 
@@ -31,10 +31,10 @@ public class PlayerManager : MonoBehaviour
         set
         {
             healthCache = value;
-            HealthUI.HealthBar.value = healthCache;
+            BattleUI.PlayerHealthSlider.value = healthCache;
             if (healthCache > maxHealth) { healthCache = maxHealth; }
 
-            HealthUI.HealthBar.value = healthCache;
+            BattleUI.PlayerHealthSlider.value = healthCache;
         }
     }
 
@@ -59,10 +59,30 @@ public class PlayerManager : MonoBehaviour
     float defence = 20.0f;
 
     [SerializeField]
-    float speed = 100.0f;
+    float speedChache = 100.0f;
+    float speed
+    {
+        get { return speedChache; }
+        set
+        {
+            speedChache = value;
+            if (speedChache < 1) { speedChache = 1; }
+        }
+    }
 
     [SerializeField]
-    float attackInterval = 100.0f;
+    float attackIntervalCache = 100.0f;
+    float attackInterval
+    {
+        get { return attackIntervalCache; }
+        set
+        {
+            attackInterval = value;
+            if (attackIntervalCache < 1) { attackIntervalCache = 1; }
+
+            BattleUI.PlayerAttackSlider.maxValue = attackIntervalCache;
+        }
+    }
 
     void Awake()
     {
@@ -71,7 +91,9 @@ public class PlayerManager : MonoBehaviour
 
     public void Initilize()
     {
-        maxHealth = maxHealth;
+        BattleUI.PlayerHealthSlider.maxValue = maxHealth;
+        BattleUI.PlayerAttackSlider.maxValue = attackInterval;
+
         health = maxHealth;
         gold = 0;
     }

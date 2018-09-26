@@ -26,7 +26,7 @@ public class FadeManager : MonoBehaviour
     void Start()
     {
         FadeImage.ExChangeAlpha(alpha);
-        TurnManager.TurnText.ExChangeAlpha(alpha);
+        //TurnManager.TurnText.ExChangeAlpha(alpha);
     }
 
     void Update()
@@ -46,23 +46,23 @@ public class FadeManager : MonoBehaviour
     {
         alpha -= speed;
         FadeImage.ExChangeAlpha(alpha);
-        TurnManager.TurnText.ExChangeAlpha(alpha);
+        //TurnManager.TurnText.ExChangeAlpha(alpha);
         if (alpha <= 0)
         {
             isFadeIn = false;
             FadeImage.enabled = false;
-            TurnManager.TurnText.enabled = false;
+            //TurnManager.TurnText.enabled = false;
         }
     }
 
     void StartFadeOut()
     {
         FadeImage.enabled = true;
-        TurnManager.TurnText.enabled = true;
+        //TurnManager.TurnText.enabled = true;
 
         alpha += speed;
         FadeImage.ExChangeAlpha(alpha);
-        TurnManager.TurnText.ExChangeAlpha(alpha);
+        //TurnManager.TurnText.ExChangeAlpha(alpha);
         if (alpha >= 1)
         {
             isFadeOut = false;

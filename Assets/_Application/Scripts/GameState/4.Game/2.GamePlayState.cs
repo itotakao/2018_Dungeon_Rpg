@@ -23,9 +23,10 @@ namespace Ito
         {
             base.OnStateEnter();
 
+            GameManager.IsBattle = true;
+
             BattleManager.OnPlayerBattleEvent += BattleManager.OnPlayerBattle;
             BattleManager.OnEnemyBattleEvent += BattleManager.OnEnemyBattle;
-
 
             //if (BattleManager.OnPlayEnterEvent != null)
             //{
@@ -60,6 +61,8 @@ namespace Ito
         public override void OnStateExit()
         {
             base.OnStateExit();
+
+            GameManager.IsBattle = false;
 
             BattleManager.ExitBattle();
 

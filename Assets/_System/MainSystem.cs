@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+
 namespace Ito
 {
     public class MainSystem : MonoBehaviour
@@ -7,6 +8,14 @@ namespace Ito
         public GameUI GameUI{ get { return GameUI.Current; }}
 
         StateMachine stateMachine;
+
+        [SerializeField]
+        GameObject[] sceneList = null;
+
+        void Awake()
+        {
+            foreach(var scene in sceneList){ scene.SetActive(true); }
+        }
 
         void Start()
         {

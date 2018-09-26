@@ -27,9 +27,7 @@ public class BattleManager : MonoBehaviour
     //public static event ButtonAction OnButtonEvent;
 
     public Monster CurrentMonster { get; private set; }
-    public Monster[] MonsterList;
-
-    float playerAttackIntervalTime = 0;
+    public Monster[] MonsterList = null;
 
     Tweener attackEffectTween = null;
     Tweener damageEffectTween = null;
@@ -39,19 +37,13 @@ public class BattleManager : MonoBehaviour
         Current = this;
     }
 
-    public void ShowBattleUI(bool show)
-    {
-        BattleUI.BattleButton.enabled = show;
-        BattleUI.EscapeButton.enabled = show;
-    }
-
     public void CallRandamMonster()
     {
         CurrentMonster = GetRandamMonster();
         CurrentMonster.Initilize();
         BattleUI.MonsterImage.sprite = CurrentMonster.GetIcon();
-        BattleUI.HealthSlider.maxValue = CurrentMonster.GetMaxHealth();
-        BattleUI.HealthSlider.value = CurrentMonster.GetHealth();
+        BattleUI.MonsterHealthSlider.maxValue = CurrentMonster.GetMaxHealth();
+        BattleUI.MonsterHealthSlider.value = CurrentMonster.GetHealth();
     }
 
     public Monster GetRandamMonster()
@@ -69,17 +61,17 @@ public class BattleManager : MonoBehaviour
     {
         AttackEffect(PlayerManager.GetAttack(), Color.red);
         CurrentMonster.Damage(PlayerManager.GetAttack());
-        BattleUI.HealthSlider.value = CurrentMonster.GetHealth();
+        BattleUI.MonsterHealthSlider.value = CurrentMonster.GetHealth();
         DamageEffect(PlayerManager.GetAttack(), Color.yellow);
 
     }
 
     public bool CheckPlayerAttack()
     {
-        playerAttackIntervalTime += PlayerManager.GetSpeed() * Time.deltaTime;
-        if (playerAttackIntervalTime > PlayerManager.GetAttackInterval())
+        BattleUI.PlayerAttackSlider.value += PlayerManager.GetSpeed() * Time.deltaTime;
+        if (BattleUI.PlayerAttackSlider.value >= BattleUI.PlayerAttackSlider.maxValue)
         {
-            playerAttackIntervalTime = 0;
+            BattleUI.PlayerAttackSlider.value = 0;
             return true;
         }
         return false;
@@ -87,10 +79,10 @@ public class BattleManager : MonoBehaviour
 
     public bool CheckEnemyAttack()
     {
-        BattleUI.AttackSlider.value -= CurrentMonster.GetSpeed() * Time.deltaTime;
-        if (0 >= BattleUI.AttackSlider.value )
+        BattleUI.MonsterAttackSlider.value += CurrentMonster.GetSpeed() * Time.deltaTime;
+        if (BattleUI.MonsterAttackSlider.value >= BattleUI.MonsterAttackSlider.maxValue)
         {
-            BattleUI.AttackSlider.value = BattleUI.AttackSlider.maxValue;
+            BattleUI.MonsterAttackSlider.value = 0;
             return true;
         }
         return false;
@@ -100,7 +92,7 @@ public class BattleManager : MonoBehaviour
     {
         AttackEffect(PlayerManager.GetAttack(), Color.red);
         CurrentMonster.Damage(PlayerManager.GetAttack());
-        BattleUI.HealthSlider.value = CurrentMonster.GetHealth();
+        BattleUI.MonsterHealthSlider.value = CurrentMonster.GetHealth();
 
         TextManager.PushLog(string.Format("<color=green>{0}ダメージ 与えた</color>", PlayerManager.GetAttack()));
     }
@@ -151,6 +143,8 @@ public class BattleManager : MonoBehaviour
 
     public void Reflesh()
     {
-        BattleUI.AttackSlider.value = BattleUI.AttackSlider.maxValue;
+        BattleUI.MonsterAttackSlider.value = 0;
+        BattleUI.PlayerAttackSlider.value = BattleUI.PlayerAttackSlider.maxValue;
+        BattleUI.BattleAnimator.SetBool("OnAttack", false);
     }
 }
