@@ -81,10 +81,10 @@ public class BattleManager : MonoBehaviour
 
     public bool CheckEnemyAttack()
     {
-        BattleUI.AttackSlider.value -= CurrentMonster.GetSpeed() * Time.deltaTime;
-        if (0 >= BattleUI.AttackSlider.value )
+        BattleUI.AttackSlider.value += CurrentMonster.GetSpeed() * Time.deltaTime;
+        if (BattleUI.AttackSlider.value >= BattleUI.AttackSlider.maxValue)
         {
-            BattleUI.AttackSlider.value = BattleUI.AttackSlider.maxValue;
+            BattleUI.AttackSlider.value = 0;
             return true;
         }
         return false;
