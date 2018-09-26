@@ -19,7 +19,6 @@ public class BattleUI : MonoBehaviour
 
     public Animator BattleAnimator = null;
     public Button BattleButton = null;
-    public Button EscapeButton = null;
 
     void Awake()
     {
