@@ -8,7 +8,7 @@ public class PlayerManager : MonoBehaviour
     public static PlayerManager Current { get; private set; }
 
     public TextManager TextManager { get { return TextManager.Current; } }
-    public HealthUI HealthUI { get { return HealthUI.Current; } }
+    public BattleUI BattleUI { get { return BattleUI.Current; } }
     public InformationUI InformationUI { get { return InformationUI.Current; } }
 
     [SerializeField]
@@ -20,7 +20,7 @@ public class PlayerManager : MonoBehaviour
         {
             maxHealthCache = value;
 
-            HealthUI.HealthBar.maxValue = maxHealthCache;
+            BattleUI.PlayerHealthSlider.maxValue = maxHealthCache;
         }
     }
 
@@ -31,10 +31,10 @@ public class PlayerManager : MonoBehaviour
         set
         {
             healthCache = value;
-            HealthUI.HealthBar.value = healthCache;
+            BattleUI.PlayerHealthSlider.value = healthCache;
             if (healthCache > maxHealth) { healthCache = maxHealth; }
 
-            HealthUI.HealthBar.value = healthCache;
+            BattleUI.PlayerHealthSlider.value = healthCache;
         }
     }
 
