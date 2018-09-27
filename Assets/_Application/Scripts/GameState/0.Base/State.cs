@@ -13,7 +13,6 @@ namespace Ito
         public GameUI GameUI { get { return GameUI.Current; } }
         public BattleUI BattleUI{ get { return BattleUI.Current; }}
         public ResultUI ResultUI { get { return ResultUI.Current; } }
-        public BattleUI EventUI{ get { return BattleUI.Current; }}
 
         public FadeManager FadeManager { get { return FadeManager.Current; } }
         public TurnManager TurnManager { get { return TurnManager.Current; } }

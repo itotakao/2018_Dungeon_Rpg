@@ -33,6 +33,9 @@ public class BattleUI : MonoBehaviour
     public void Reset()
     {
         MonsterImage.sprite = null;
+        MonsterAttackSlider.value = 0;
+        PlayerAttackSlider.value = PlayerAttackSlider.maxValue;
+        BattleAnimator.SetBool("OnAttack", false);
     }
 
     public void Show(bool isShow)

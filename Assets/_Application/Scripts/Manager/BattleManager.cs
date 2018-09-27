@@ -143,8 +143,6 @@ public class BattleManager : MonoBehaviour
 
     public void Reflesh()
     {
-        BattleUI.MonsterAttackSlider.value = 0;
-        BattleUI.PlayerAttackSlider.value = BattleUI.PlayerAttackSlider.maxValue;
-        BattleUI.BattleAnimator.SetBool("OnAttack", false);
+        BattleUI.Reset();
     }
 }

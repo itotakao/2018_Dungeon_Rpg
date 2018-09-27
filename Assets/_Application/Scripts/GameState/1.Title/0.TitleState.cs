@@ -30,7 +30,7 @@ namespace Ito
             PlayerManager.Initilize();
             TextManager.ClerLog();
 
-            EventUI.Reset();
+            BattleManager.Reflesh();
         }
 
         public override void OnStateExit()
