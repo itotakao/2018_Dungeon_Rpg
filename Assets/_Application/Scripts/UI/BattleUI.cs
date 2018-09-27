@@ -35,7 +35,7 @@ public class BattleUI : MonoBehaviour
         MonsterImage.sprite = null;
         MonsterAttackSlider.value = 0;
         PlayerAttackSlider.value = PlayerAttackSlider.maxValue;
-        BattleAnimator.SetBool("OnAttack", false);
+        if (BattleAnimator.isInitialized) { BattleAnimator.SetBool("OnAttack", false); }// 警告が出ないように
     }
 
     public void Show(bool isShow)
