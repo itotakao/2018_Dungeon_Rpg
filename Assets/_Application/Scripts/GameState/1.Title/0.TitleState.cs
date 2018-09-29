@@ -25,6 +25,7 @@ namespace Ito
             base.OnStateEnter();
 
             TitleUI.Show(true);
+            TownUI.Show(false);
             GameUI.Show(false);
 
             PlayerManager.Initilize();

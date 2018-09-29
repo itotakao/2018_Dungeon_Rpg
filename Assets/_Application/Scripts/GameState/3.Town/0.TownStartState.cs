@@ -1,21 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Ito.GameState;
 using UnityEngine;
+using Ito.GameState;
 
 namespace Ito
 {
-    public class GameChoiceState : State
+    public class TownStartState : State
     {
-        bool IsFinish = false;
-        public GameChoiceState(StateMachine stateMachine) : base(stateMachine)
+        bool isFinish = false;
+
+        public TownStartState(StateMachine stateMachine) : base(stateMachine)
         {
             TransitionFunctions.Add(new TransitionFunction(Transition));
         }
 
         State Transition()
         {
-            if (IsFinish) { return new GamePlayState(StateMachine); }
+            if (isFinish) { return new TownPlayState(StateMachine); }
+
             return null;
         }
 
@@ -23,12 +25,19 @@ namespace Ito
         {
             base.OnStateEnter();
 
+            GameManager.Reflesh();
 
+            TitleUI.Show(false);
+            TownUI.Show(true);
+            GameUI.Show(false);
+
+            isFinish = true;
         }
 
         public override void OnStateExit()
         {
             base.OnStateExit();
+
             //BGMManager.Current.Stop();
         }
     }
