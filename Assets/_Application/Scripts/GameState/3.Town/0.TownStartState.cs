@@ -27,9 +27,9 @@ namespace Ito
 
             GameManager.Reflesh();
 
-            TitleUI.Show(false);
-            TownUI.Show(true);
-            GameUI.Show(false);
+            TitleScene.Show(false);
+            TownScene.Show(true);
+            GameScene.Show(false);
 
             isFinish = true;
         }

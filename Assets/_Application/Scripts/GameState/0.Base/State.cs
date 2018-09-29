@@ -8,12 +8,15 @@ namespace Ito
     {
         public CardManager CardManager { get { return CardManager.Current; } }
 
-        public TitleUI TitleUI { get { return TitleUI.Current; } }
-        public MenuUI MenuUI { get { return MenuUI.Current; } }
-        public GameUI GameUI { get { return GameUI.Current; } }
+        public TitleScene TitleScene { get { return TitleScene.Current; } }
+        public TownScene TownScene { get { return TownScene.Current; } }
+        public GameScene GameScene { get { return GameScene.Current; } }
+        public ResultScene ResultScene { get { return ResultScene.Current; } }
+
+
         public BattleUI BattleUI { get { return BattleUI.Current; } }
-        public ResultUI ResultUI { get { return ResultUI.Current; } }
-        public TownUI TownUI { get { return TownUI.Current; } }
+        public MenuUI MenuUI { get { return MenuUI.Current; } }
+
 
         public FadeManager FadeManager { get { return FadeManager.Current; } }
         public TurnManager TurnManager { get { return TurnManager.Current; } }

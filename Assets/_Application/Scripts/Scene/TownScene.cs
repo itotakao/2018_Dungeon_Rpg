@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TownUI : MonoBehaviour {
+public class TownScene : MonoBehaviour {
 
-    public static TownUI Current { get; private set; }
+    public static TownScene Current { get; private set; }
 
     void Awake()
     {

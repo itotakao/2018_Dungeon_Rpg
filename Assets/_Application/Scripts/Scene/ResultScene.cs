@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResultUI : MonoBehaviour {
+public class ResultScene : MonoBehaviour {
 
-    public static ResultUI Current { get; private set; }
+    public static ResultScene Current { get; private set; }
 
     public bool IsRestart = false;
     public bool IsExit = false;

@@ -4,8 +4,7 @@ namespace Ito
 {
     public class MainSystem : MonoBehaviour
     {
-        public TitleUI TitleUI { get { return TitleUI.Current; }}
-        public GameUI GameUI{ get { return GameUI.Current; }}
+        public TitleScene TitleScene { get { return TitleScene.Current; }}
 
         StateMachine stateMachine;
 
@@ -24,8 +23,7 @@ namespace Ito
             stateMachine = new StateMachine();
             stateMachine.Start();
 
-            TitleUI.Show(true);
-            GameUI.Show(false);
+            TitleScene.Show(true);
         }
 
         void Update()

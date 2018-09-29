@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class GameUI : MonoBehaviour
+public class GameScene : MonoBehaviour
 {
-    public static GameUI Current { get; private set; }
+    public static GameScene Current { get; private set; }
 
     void Awake()
     {
