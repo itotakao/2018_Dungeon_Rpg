@@ -30,6 +30,8 @@ namespace Ito
             TownUI.Show(false);
             GameUI.Show(true);
 
+            BattleUI.Show(false);
+
             //StartCoroutine(CoTransitionEffect());
             FadeManager.isFadeIn = true;
             isFinish = true;
