@@ -40,6 +40,8 @@ public class Item : ScriptableObject
     //　アイテムの情報
     [SerializeField]
     private string information;
+    [SerializeField]
+    private float sellGold;
     // アイテムの固有効果
     [SerializeField]
     private Status status;
@@ -61,6 +63,10 @@ public class Item : ScriptableObject
     public string GetInformation()
     {
         return information;
+    }
+    public float GetSellGold()
+    {
+        return sellGold;
     }
     public Status GetStatus()
     {
