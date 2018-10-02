@@ -10,10 +10,9 @@ public class Item : ScriptableObject
     {
         Weapon,
         UseItem,
-        Helmet,
         Armor,
-        Arm,
-        Boots,
+        Accessory,
+        Familiar,
         None
     }
 
