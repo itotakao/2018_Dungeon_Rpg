@@ -41,7 +41,7 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Card
+  - name: UI
     uniqueID: 3038576319
     locked: 0
   - name: Item
@@ -52,4 +52,7 @@ TagManager:
     locked: 0
   - name: Button
     uniqueID: 704263947
+    locked: 0
+  - name: Dialog
+    uniqueID: 972904471
     locked: 0

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Battle;
 
 //TODO : 役割持たせすぎ　分割する必要あり
 public class BattleManager : MonoBehaviour

@@ -64,7 +64,10 @@ namespace Ito
 
             GameManager.IsBattle = false;
 
-            BattleManager.ExitBattle();
+            if (BattleManager.CurrentMonster.GetHealth() <= 0)
+            {
+                BattleManager.ExitBattle();
+            }
 
             BattleManager.OnPlayerBattleEvent -= BattleManager.OnPlayerBattle;
             BattleManager.OnEnemyBattleEvent -= BattleManager.OnEnemyBattle;

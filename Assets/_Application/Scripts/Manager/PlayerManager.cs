@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Battle;
 
 public class PlayerManager : MonoBehaviour
 {
-
     public static PlayerManager Current { get; private set; }
 
     public TextManager TextManager { get { return TextManager.Current; } }
@@ -39,7 +39,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     [SerializeField]
-    float goldCache = 0;
+    float goldCache = 100;
     float gold
     {
         get { return goldCache; }
@@ -95,7 +95,7 @@ public class PlayerManager : MonoBehaviour
         BattleUI.PlayerAttackSlider.maxValue = attackInterval;
 
         health = maxHealth;
-        gold = 0;
+        gold = gold;
     }
 
     public void Reflesh()
@@ -153,6 +153,11 @@ public class PlayerManager : MonoBehaviour
     public void SetAttackInterval(float value)
     {
         attackInterval = value;
+    }
+
+    public void SetGold(float value)
+    {
+        gold = value;
     }
 
     public void Damage(float value)

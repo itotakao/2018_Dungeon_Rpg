@@ -1,6 +1,8 @@
 ﻿using Ito.GameState;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Battle;
+using Town;
 
 namespace Ito
 {
@@ -17,6 +19,7 @@ namespace Ito
         public BattleUI BattleUI { get { return BattleUI.Current; } }
         public MenuUI MenuUI { get { return MenuUI.Current; } }
 
+        public ItemShopUI ItemShopUI { get { return ItemShopUI.Current; } }
 
         public FadeManager FadeManager { get { return FadeManager.Current; } }
         public TurnManager TurnManager { get { return TurnManager.Current; } }
