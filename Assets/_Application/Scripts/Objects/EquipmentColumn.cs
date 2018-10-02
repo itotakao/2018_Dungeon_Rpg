@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[ExecuteInEditMode]
-public class EquipmentColumn : MonoBehaviour 
+public class EquipmentColumn : MonoBehaviour
 {
     public Item item = null;
 
-    public bool IsLock { get { return lockIcon.activeSelf; }}
+    public bool IsLock { get { return lockIcon.activeSelf; } }
 
     [Space(10)]
 
@@ -21,19 +20,22 @@ public class EquipmentColumn : MonoBehaviour
     [SerializeField]
     GameObject lockIcon = null;
 
+    public void SetItem(Item newItem)
+    {
+        item = newItem;
+    }
 
-	void Start () {
-
-        if (!item) { return; }
+    public void UpdateColumn()
+    {
+        if (!item) { 
+            iconImage.sprite = null;
+            nameText.text = null;
+            informationText.text = null;
+            return; 
+        }
 
         iconImage.sprite = item.GetIcon();
         nameText.text = item.GetItemName();
         informationText.text = item.GetInformation();
-
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    }
 }
