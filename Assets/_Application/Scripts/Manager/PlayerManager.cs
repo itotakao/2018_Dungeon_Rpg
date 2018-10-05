@@ -11,6 +11,8 @@ public class PlayerManager : MonoBehaviour
     public BattleUI BattleUI { get { return BattleUI.Current; } }
     public InformationUI InformationUI { get { return InformationUI.Current; } }
 
+    const int MaxBagSize = 5;
+
     [SerializeField]
     float maxHealthCache = 100;
     float maxHealth
@@ -101,6 +103,11 @@ public class PlayerManager : MonoBehaviour
     public void Reflesh()
     {
         health = maxHealth;
+    }
+
+    public int GetMaxBagSize()
+    {
+        return MaxBagSize;
     }
 
     public float GetMaxHealth()

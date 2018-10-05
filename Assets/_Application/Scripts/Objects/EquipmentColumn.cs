@@ -9,6 +9,11 @@ public class EquipmentColumn : MonoBehaviour
 
     public bool IsLock { get { return lockIcon.activeSelf; } }
 
+    public bool IsUse = false;
+
+    Image dialogImageCache = null;
+    public Image DialogImage{ get { return dialogImageCache ? dialogImageCache : GetComponent<Image>(); }}
+
     [Space(10)]
 
     [SerializeField]
@@ -33,7 +38,6 @@ public class EquipmentColumn : MonoBehaviour
             informationText.text = null;
             return; 
         }
-
         iconImage.sprite = item.GetIcon();
         nameText.text = item.GetItemName();
         informationText.text = item.GetInformation();

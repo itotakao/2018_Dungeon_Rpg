@@ -9,6 +9,7 @@ public class ItemManager : MonoBehaviour
 
     public PlayerManager PlayerManager { get { return PlayerManager.Current; } }
     public ItemListUI ItemListUI { get { return ItemListUI.Current; } }
+    public EquipmentUI BuildUI { get { return EquipmentUI.Current; } }
 
     // アイテムはスタックするためDictonaryで数を管理しています
     [SerializeField] public ItemDictionary itemDictionary;
@@ -53,6 +54,10 @@ public class ItemManager : MonoBehaviour
                 break;
 
             case Item.KindOfItem.Weapon:
+
+                // HACK : 手持ち数を超えた処理
+                // TODO : アイテムいっぱい演出を追加する必要あり
+                if (WeaponBox.Count > PlayerManager.GetMaxBagSize()) { return; }
 
                 WeaponBox.Add(item);
                 UpdateWeaponBox(item);
@@ -122,7 +127,7 @@ public class ItemManager : MonoBehaviour
 
     public void UpdateWeaponBox(Item item)
     {
-
+        BuildUI.UpdateUI();
     }
 
     public void UpdateArmorBox(Item item)
