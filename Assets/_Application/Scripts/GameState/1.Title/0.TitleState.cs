@@ -14,7 +14,7 @@ namespace Ito
         {
             if (Input.GetKeyDown(KeyCode.S) || TitleScene.IsOnButton)
             {
-                return new GameStartState(StateMachine);
+                return new TownStartState(StateMachine);
             }
 
             return null;
