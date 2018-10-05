@@ -19,8 +19,6 @@ namespace Ito
         public BattleUI BattleUI { get { return BattleUI.Current; } }
         public MenuUI MenuUI { get { return MenuUI.Current; } }
 
-        public ItemShopUI ItemShopUI { get { return ItemShopUI.Current; } }
-
         public FadeManager FadeManager { get { return FadeManager.Current; } }
         public TurnManager TurnManager { get { return TurnManager.Current; } }
         public GameManager GameManager { get { return GameManager.Current; } }
