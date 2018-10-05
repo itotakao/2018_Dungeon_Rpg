@@ -1,6 +1,8 @@
 ﻿using Ito.GameState;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Battle;
+using Town;
 
 namespace Ito
 {
@@ -8,39 +10,40 @@ namespace Ito
     {
         public CardManager CardManager { get { return CardManager.Current; } }
 
-        public TitleUI TitleUI { get { return TitleUI.Current; } }
+        public TitleScene TitleScene { get { return TitleScene.Current; } }
+        public TownScene TownScene { get { return TownScene.Current; } }
+        public GameScene GameScene { get { return GameScene.Current; } }
+        public ResultScene ResultScene { get { return ResultScene.Current; } }
+
+
+        public BattleUI BattleUI { get { return BattleUI.Current; } }
         public MenuUI MenuUI { get { return MenuUI.Current; } }
-        public GameUI GameUI { get { return GameUI.Current; } }
-        public BattleUI BattleUI{ get { return BattleUI.Current; }}
-        public ResultUI ResultUI { get { return ResultUI.Current; } }
-        public BattleUI EventUI{ get { return BattleUI.Current; }}
+
+        public ItemShopUI ItemShopUI { get { return ItemShopUI.Current; } }
 
         public FadeManager FadeManager { get { return FadeManager.Current; } }
         public TurnManager TurnManager { get { return TurnManager.Current; } }
-        public GameManager GameManager{ get { return GameManager.Current; }}
-        public PlayerManager PlayerManager{ get { return PlayerManager.Current; }}
-        public BattleManager BattleManager{ get { return BattleManager.Current; }}
-        public TextManager TextManager{ get { return TextManager.Current; }}
+        public GameManager GameManager { get { return GameManager.Current; } }
+        public PlayerManager PlayerManager { get { return PlayerManager.Current; } }
+        public BattleManager BattleManager { get { return BattleManager.Current; } }
+        public TextManager TextManager { get { return TextManager.Current; } }
 
-        //enum SkipToState { None, Tutorial, Opening, Duel1, Duel2, FinalDuel, Result };
-        //SkipToState skipTo = SkipToState.None;
+        enum SwitchToState { None, Title, Battle, Town };
+        SwitchToState switchTo = SwitchToState.None;
 
         public State(StateMachine stateMachine) : base(stateMachine)
         {
-            TransitionFunctions.Add(new TransitionFunction(Skip));
+            TransitionFunctions.Add(new TransitionFunction(Switch));
         }
 
-        State Skip()
+        State Switch()
         {
-            //switch (skipTo)
-            //{
-            //    case SkipToState.Tutorial: return new TutorialStartState(StateMachine);
-            //    case SkipToState.Opening: return new OpeningStartState(StateMachine);
-            //    case SkipToState.Duel1: return new DuelStartState(StateMachine);
-            //    case SkipToState.Duel2: return new DuelStartState(StateMachine);
-            //    case SkipToState.FinalDuel: return new FinalDuelStartState(StateMachine);
-            //    case SkipToState.Result: return new ResultStartState(StateMachine);
-            //}
+            switch (switchTo)
+            {
+                case SwitchToState.Title: return new TutorialStartState(StateMachine);
+                case SwitchToState.Town: return new TownStartState(StateMachine);
+                case SwitchToState.Battle: return new GameStartState(StateMachine);
+            }
 
             return null;
         }
@@ -56,15 +59,12 @@ namespace Ito
 
         public override void OnStateUpdate()
         {
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                ReloadScene();
-            }
+            if (Input.GetKeyDown(KeyCode.R)) { ReloadScene(); }
 
-            //if (Input.GetKeyDown(KeyCode.Escape))
-            //{
-            //    Application.Quit();
-            //}
+            if (Input.GetKeyDown(KeyCode.Escape)) { Application.Quit(); }
+
+            if (GameManager.IsSwitchToTown) { switchTo = SwitchToState.Town; }
+            if (GameManager.IsSwitchToBattle) { switchTo = SwitchToState.Battle; }
 
             //if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
             //{

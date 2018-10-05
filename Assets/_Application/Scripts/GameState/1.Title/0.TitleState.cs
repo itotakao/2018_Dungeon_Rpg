@@ -12,7 +12,7 @@ namespace Ito
 
         State Transition()
         {
-            if (Input.GetKeyDown(KeyCode.S) || TitleUI.IsOnButton)
+            if (Input.GetKeyDown(KeyCode.S) || TitleScene.IsOnButton)
             {
                 return new GameStartState(StateMachine);
             }
@@ -24,13 +24,14 @@ namespace Ito
         {
             base.OnStateEnter();
 
-            TitleUI.Show(true);
-            GameUI.Show(false);
+            TitleScene.Show(true);
+            TownScene.Show(false);
+            GameScene.Show(false);
 
             PlayerManager.Initilize();
             TextManager.ClerLog();
 
-            EventUI.Reset();
+            BattleManager.Reflesh();
         }
 
         public override void OnStateExit()

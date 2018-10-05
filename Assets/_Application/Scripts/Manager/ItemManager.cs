@@ -9,7 +9,9 @@ public class ItemManager : MonoBehaviour
 
     public PlayerManager PlayerManager { get { return PlayerManager.Current; } }
     public ItemListUI ItemListUI { get { return ItemListUI.Current; } }
+    public EquipmentUI BuildUI { get { return EquipmentUI.Current; } }
 
+    // アイテムはスタックするためDictonaryで数を管理しています
     [SerializeField] public ItemDictionary itemDictionary;
     public IDictionary<Item, int> ItemDictionary
     {
@@ -17,39 +19,78 @@ public class ItemManager : MonoBehaviour
         set { itemDictionary.CopyFrom(value); }
     }
 
-    public Item[] ScriptItemList;
+    public List<Item> WeaponBox { get; private set; }
+    public List<Item> ArmorBox { get; private set; }
+    public List<Item> AccessoryBox { get; private set; }
+    public List<Item> FamiliarBox { get; private set; }
 
     void Awake()
     {
         Current = this;
+
+        WeaponBox = new List<Item>();
+        ArmorBox = new List<Item>();
+        AccessoryBox = new List<Item>();
+        FamiliarBox = new List<Item>();
     }
 
-    void Start()
-    {
-        Initilize();
-    }
-
-    void Initilize()
-    {
-        foreach (var item in ScriptItemList) { AddItem(item); }
-    }
-
+    // TODO : もっとスマートに短くしたい
     public void AddItem(Item item)
     {
-        if (ItemDictionary.ContainsKey(item))
+        switch (item.GetKindOfItem())
         {
-            ItemDictionary[item]++;
+            case Item.KindOfItem.UseItem:
+
+                if (ItemDictionary.ContainsKey(item))
+                {
+                    ItemDictionary[item]++;
+                }
+                else
+                {
+                    ItemDictionary.Add(item, 1);
+                }
+                UpdateItemBox(item);
+
+                break;
+
+            case Item.KindOfItem.Weapon:
+
+                // HACK : 手持ち数を超えた処理
+                // TODO : アイテムいっぱい演出を追加する必要あり
+                if (WeaponBox.Count > PlayerManager.GetMaxBagSize()) { return; }
+
+                WeaponBox.Add(item);
+                UpdateWeaponBox(item);
+
+                break;
+
+            case Item.KindOfItem.Armor:
+
+                ArmorBox.Add(item);
+                UpdateArmorBox(item);
+
+                break;
+
+
+            case Item.KindOfItem.Accessory:
+
+                AccessoryBox.Add(item);
+                UpdateAccessoryBox(item);
+
+                break;
+
+            case Item.KindOfItem.Familiar:
+
+                FamiliarBox.Add(item);
+                UpdateFamiliarBox(item);
+
+                break;
         }
-        else
-        {
-            ItemDictionary.Add(item, 1);
-        }
-        DrawItemBox(item);
     }
 
-    public void DrawItemBox(Item item)
+    public void UpdateItemBox(Item item)
     {
-        ItemListUI.Show(true);
+        ItemListUI.Show(true);// これいらないかも
 
         // アイテムが存在しているかどうか TODO:もっとスマートに　継承するか？
         int counter = 0;
@@ -84,6 +125,26 @@ public class ItemManager : MonoBehaviour
         }
     }
 
+    public void UpdateWeaponBox(Item item)
+    {
+        BuildUI.UpdateUI();
+    }
+
+    public void UpdateArmorBox(Item item)
+    {
+
+    }
+
+    public void UpdateAccessoryBox(Item item)
+    {
+
+    }
+
+    public void UpdateFamiliarBox(Item item)
+    {
+
+    }
+
     public Item GetItemFromIconName(string iconName)
     {
         foreach (KeyValuePair<Item, int> pair in ItemDictionary)
@@ -106,16 +167,22 @@ public class ItemManager : MonoBehaviour
             case Item.Status.HP:
                 PlayerManager.Heal(item.GetValue());
                 break;
+
             case Item.Status.Attack:
                 break;
+
             case Item.Status.AttackSpeed:
                 break;
+
             case Item.Status.Defence:
                 break;
+
             case Item.Status.Luck:
                 break;
+
             case Item.Status.Speed:
                 break;
+
             default:
 #if UNITY_EDITOR
                 Debug.LogError("エラー: 未知なるステータスが設定されています");
@@ -124,6 +191,6 @@ public class ItemManager : MonoBehaviour
         }
 
         ItemDictionary[item]--;
-        DrawItemBox(item);
+        UpdateItemBox(item);
     }
 }

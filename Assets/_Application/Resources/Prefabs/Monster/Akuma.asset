@@ -20,7 +20,7 @@ MonoBehaviour:
   speed: 50
   gold: 30
   normalDropList:
-  - {fileID: 11400000, guid: a4d471922488d433d9f9f01ba5a43d98, type: 2}
+  - {fileID: 11400000, guid: 77524409da1304338b013ee4808fb365, type: 2}
   normalDropLate: 100
   rareDropList: []
   rareDropLate: 0

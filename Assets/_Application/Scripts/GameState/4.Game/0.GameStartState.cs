@@ -24,11 +24,17 @@ namespace Ito
         {
             base.OnStateEnter();
 
-            TitleUI.Show(false);
-            GameUI.Show(true);
+            GameManager.Reflesh();
 
-            StartCoroutine(CoTransitionEffect());
+            TitleScene.Show(false);
+            TownScene.Show(false);
+            GameScene.Show(true);
 
+            BattleUI.Show(false);
+
+            //StartCoroutine(CoTransitionEffect());
+            FadeManager.isFadeIn = true;
+            isFinish = true;
         }
 
         IEnumerator CoTransitionEffect()

@@ -1,15 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Battle;
 
 public class PlayerManager : MonoBehaviour
 {
-
     public static PlayerManager Current { get; private set; }
 
     public TextManager TextManager { get { return TextManager.Current; } }
     public BattleUI BattleUI { get { return BattleUI.Current; } }
     public InformationUI InformationUI { get { return InformationUI.Current; } }
+
+    const int MaxBagSize = 5;
 
     [SerializeField]
     float maxHealthCache = 100;
@@ -39,7 +41,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     [SerializeField]
-    float goldCache = 0;
+    float goldCache = 100;
     float gold
     {
         get { return goldCache; }
@@ -95,12 +97,17 @@ public class PlayerManager : MonoBehaviour
         BattleUI.PlayerAttackSlider.maxValue = attackInterval;
 
         health = maxHealth;
-        gold = 0;
+        gold = gold;
     }
 
     public void Reflesh()
     {
         health = maxHealth;
+    }
+
+    public int GetMaxBagSize()
+    {
+        return MaxBagSize;
     }
 
     public float GetMaxHealth()
@@ -153,6 +160,11 @@ public class PlayerManager : MonoBehaviour
     public void SetAttackInterval(float value)
     {
         attackInterval = value;
+    }
+
+    public void SetGold(float value)
+    {
+        gold = value;
     }
 
     public void Damage(float value)
