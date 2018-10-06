@@ -31,8 +31,6 @@ namespace Ito
             TownScene.Show(true);
             GameScene.Show(false);
 
-            ItemShopUI.Show(false);
-
             isFinish = true;
         }
 

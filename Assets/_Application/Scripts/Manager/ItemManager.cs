@@ -127,7 +127,7 @@ public class ItemManager : MonoBehaviour
 
     public void UpdateWeaponBox(Item item)
     {
-        BuildUI.UpdateUI();
+        BuildUI.UpdateEquipmentColumnUI();
     }
 
     public void UpdateArmorBox(Item item)

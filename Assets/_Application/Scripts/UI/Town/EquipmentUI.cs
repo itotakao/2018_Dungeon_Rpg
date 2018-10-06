@@ -42,6 +42,19 @@ public class EquipmentUI : Base.NormalDialog
     [SerializeField]
     Image familiarSwitchButtonImage = null;
 
+    [SerializeField]
+    Image inspectorIconImage = null;
+    [SerializeField]
+    Text inspectorNameText = null;
+    [SerializeField]
+    Text inspectorInformationText = null;
+    [SerializeField]
+    Text inspectorStatusValueText = null;
+    [SerializeField]
+    Text inspectorSpecialStatusValueText = null;
+    [SerializeField]
+    Text inspectorSellGoldText = null;
+
     void Awake()
     {
         Current = this;
@@ -50,13 +63,14 @@ public class EquipmentUI : Base.NormalDialog
     void Start()
     {
         SwitchEquipmentScrollView(KindOfEquipmentItem.Weapon);
+        UpdateInspectorUI(null);
         Show(false);
     }
 
-    public void UpdateUI()
+    public void UpdateEquipmentColumnUI()
     {
         // ERROR : リスト以上のアイテムを入れるとエラーが出る
-        switch(CurrentKindOfEquipment)
+        switch (CurrentKindOfEquipment)
         {
             case KindOfEquipmentItem.Weapon:
 
@@ -100,6 +114,27 @@ public class EquipmentUI : Base.NormalDialog
         }
     }
 
+    public void UpdateInspectorUI(Item item)
+    {
+        if (!item)
+        {
+            inspectorIconImage.sprite = null;
+            inspectorNameText.text = null;
+            inspectorInformationText.text = null;
+            inspectorStatusValueText.text = null;
+            inspectorSpecialStatusValueText.text = null;
+            inspectorSellGoldText.text = null;
+            return;
+        }
+
+        inspectorIconImage.sprite = item.GetIcon();
+        inspectorNameText.text = item.GetItemName();
+        inspectorInformationText.text = item.GetInformation();
+        inspectorStatusValueText.text = item.GetStatus().ToString() +" +" + item.GetValue().ToString();
+        inspectorSpecialStatusValueText.text = null;// TODO : 付け足す
+        inspectorSellGoldText.text = item.GetSellGold().ToString();
+    }
+
     public void Initialize()
     {
         // TODO : 装備しているやつは黄色にする
@@ -107,6 +142,8 @@ public class EquipmentUI : Base.NormalDialog
         foreach (var equipmentColumn in ArmorEquipmentColumnList) { equipmentColumn.DialogImage.ExChangeGray(); }
         foreach (var equipmentColumn in AccessoryEquipmentColumnList) { equipmentColumn.DialogImage.ExChangeGray(); }
         foreach (var equipmentColumn in FamiliarEquipmentColumnList) { equipmentColumn.DialogImage.ExChangeGray(); }
+
+
     }
 
     public void SetCurrentKindOfEquipment(KindOfEquipmentItem kindOfEquipment)

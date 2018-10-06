@@ -6,6 +6,9 @@ namespace Town
 {
     public class ItemShopUI : Base.NormalDialog
     {
-        public static ItemShopUI Current { get; private set; }
+        void Start()
+        {
+            Show(false);
+        }
     }
 }
