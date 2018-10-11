@@ -34,6 +34,7 @@ namespace Ito
 
             FadeManager.isFadeIn = true;
 
+            // TODO : カプセル化
             BattleUI.PlayerNameText.text = PlayerManager.GetName();
 
             isFinish = true;
