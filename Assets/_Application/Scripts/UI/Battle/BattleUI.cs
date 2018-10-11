@@ -20,7 +20,6 @@ namespace Battle
         public Slider MonsterAttackSlider = null;
 
         public Animator BattleAnimator = null;
-        public Button BattleButton = null;
 
         void Awake()
         {

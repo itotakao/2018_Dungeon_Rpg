@@ -51,9 +51,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e816d51212ad4141affd3c084b4dcb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerName: "\u30D7\u30EC\u30A4\u30E4\u30FC\u30CD\u30FC\u30E0"
   maxHealthCache: 100
-  goldCache: 0
-  attack: 10
+  goldCache: 100
+  attack: 100
   defence: 20
-  speed: 100
-  attackInterval: 100
+  speedChache: 100
+  attackIntervalCache: 100

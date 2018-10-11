@@ -14,6 +14,9 @@ public class PlayerManager : MonoBehaviour
     const int MaxBagSize = 5;
 
     [SerializeField]
+    string playerName = "";
+
+    [SerializeField]
     float maxHealthCache = 100;
     float maxHealth
     {
@@ -103,6 +106,11 @@ public class PlayerManager : MonoBehaviour
     public void Reflesh()
     {
         health = maxHealth;
+    }
+
+    public string GetName()
+    {
+        return playerName;
     }
 
     public int GetMaxBagSize()
