@@ -11,7 +11,9 @@ public class PlayerManager : MonoBehaviour
     public BattleUI BattleUI { get { return BattleUI.Current; } }
     public InformationUI InformationUI { get { return InformationUI.Current; } }
 
-    const int MaxBagSize = 5;
+    const int MaxBagSize = 5;//TODO : constはチゲーだろ
+
+
 
     [SerializeField]
     string playerName = "";
