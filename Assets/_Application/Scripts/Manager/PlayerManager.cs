@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Battle;
+using Base;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -12,8 +13,6 @@ public class PlayerManager : MonoBehaviour
     public InformationUI InformationUI { get { return InformationUI.Current; } }
 
     const int MaxBagSize = 5;//TODO : constはチゲーだろ
-
-
 
     [SerializeField]
     string playerName = "";
@@ -91,6 +90,9 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public Skill SkillA = null;
+    public Skill SkillB = null;
+    public Skill SkillC = null;
     void Awake()
     {
         Current = this;

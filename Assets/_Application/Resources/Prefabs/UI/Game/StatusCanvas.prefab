@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 223492189524304480}
   - component: {fileID: 114883131144153888}
   - component: {fileID: 114132266726862344}
+  - component: {fileID: 114341494836626940}
   m_Layer: 5
   m_Name: StatusCanvas
   m_TagString: Untagged
@@ -132,6 +133,17 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114341494836626940
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1391499195732682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4599efc08c444f0ab7b2e56acfa119a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114612015339918332
 MonoBehaviour:
   m_ObjectHideFlags: 1
