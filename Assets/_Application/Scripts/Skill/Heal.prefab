@@ -9,55 +9,46 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1720732431656976}
+  m_RootGameObject: {fileID: 1291148847021964}
   m_IsPrefabAsset: 1
---- !u!1 &1720732431656976
+--- !u!1 &1291148847021964
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4955459994758476}
-  - component: {fileID: 114330348018969232}
+  - component: {fileID: 4821478888968494}
+  - component: {fileID: 114116579499770726}
   m_Layer: 0
-  m_Name: PlayerManager
+  m_Name: Heal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4955459994758476
+--- !u!4 &4821478888968494
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1720732431656976}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_GameObject: {fileID: 1291148847021964}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114330348018969232
+--- !u!114 &114116579499770726
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1720732431656976}
+  m_GameObject: {fileID: 1291148847021964}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e816d51212ad4141affd3c084b4dcb4, type: 3}
+  m_Script: {fileID: 11500000, guid: 13a4aabcb9068446ab58292f077951c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerName: "\u30D7\u30EC\u30A4\u30E4\u30FC\u30CD\u30FC\u30E0"
-  maxHealthCache: 100
-  goldCache: 100
-  attack: 100
-  defence: 20
-  speedChache: 100
-  attackIntervalCache: 100
-  SkillA: {fileID: 114116579499770726, guid: d61c5b40d5fa34ffebdeb9d2efd98d78, type: 2}
-  SkillB: {fileID: 114116579499770726, guid: d61c5b40d5fa34ffebdeb9d2efd98d78, type: 2}
-  SkillC: {fileID: 114116579499770726, guid: d61c5b40d5fa34ffebdeb9d2efd98d78, type: 2}
+  skillName: "\u30D2\u30FC\u30EB"

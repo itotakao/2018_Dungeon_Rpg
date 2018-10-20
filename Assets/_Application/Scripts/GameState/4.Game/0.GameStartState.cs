@@ -32,18 +32,10 @@ namespace Ito
 
             BattleUI.Show(false);
 
-            //StartCoroutine(CoTransitionEffect());
             FadeManager.isFadeIn = true;
-            isFinish = true;
-        }
 
-        IEnumerator CoTransitionEffect()
-        {
-            FadeManager.isFadeOut = true;
-
-            yield return new WaitForSeconds(2);
-
-            FadeManager.isFadeIn = true;
+            // TODO : カプセル化
+            BattleUI.PlayerNameText.text = PlayerManager.GetName();
 
             isFinish = true;
         }

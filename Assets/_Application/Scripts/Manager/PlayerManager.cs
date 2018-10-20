@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Battle;
+using Base;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -11,7 +12,10 @@ public class PlayerManager : MonoBehaviour
     public BattleUI BattleUI { get { return BattleUI.Current; } }
     public InformationUI InformationUI { get { return InformationUI.Current; } }
 
-    const int MaxBagSize = 5;
+    const int MaxBagSize = 5;//TODO : constはチゲーだろ
+
+    [SerializeField]
+    string playerName = "";
 
     [SerializeField]
     float maxHealthCache = 100;
@@ -86,6 +90,9 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public Skill SkillA = null;
+    public Skill SkillB = null;
+    public Skill SkillC = null;
     void Awake()
     {
         Current = this;
@@ -103,6 +110,11 @@ public class PlayerManager : MonoBehaviour
     public void Reflesh()
     {
         health = maxHealth;
+    }
+
+    public string GetName()
+    {
+        return playerName;
     }
 
     public int GetMaxBagSize()
