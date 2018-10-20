@@ -194,7 +194,7 @@ public class PlayerManager : MonoBehaviour
         gold += value;
     }
 
-    public void TakeGold(float value)
+    public void UseGold(float value)
     {
         if (gold < value)
         {
