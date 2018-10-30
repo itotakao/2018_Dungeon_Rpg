@@ -8,91 +8,47 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Current { get; private set; }
 
+    public BuildManager BuildManager{ get { return BuildManager.Current; }}
     public TextManager TextManager { get { return TextManager.Current; } }
     public BattleUI BattleUI { get { return BattleUI.Current; } }
     public InformationUI InformationUI { get { return InformationUI.Current; } }
 
-    const int MaxBagSize = 5;//TODO : constはチゲーだろ
-
     [SerializeField]
     string playerName = "";
+    [SerializeField]
+    float gold = 0;
+    [SerializeField]
+    int bagSize = 5;
 
     [SerializeField]
-    float maxHealthCache = 100;
-    float maxHealth
-    {
-        get { return maxHealthCache; }
-        set
-        {
-            maxHealthCache = value;
-
-            BattleUI.PlayerHealthSlider.maxValue = maxHealthCache;
-        }
-    }
-
-    float healthCache;
-    float health
-    {
-        get { return healthCache; }
-        set
-        {
-            healthCache = value;
-            BattleUI.PlayerHealthSlider.value = healthCache;
-            if (healthCache > maxHealth) { healthCache = maxHealth; }
-
-            BattleUI.PlayerHealthSlider.value = healthCache;
-        }
-    }
+    float health = 100;
 
     [SerializeField]
-    float goldCache = 100;
-    float gold
-    {
-        get { return goldCache; }
-        set
-        {
-            goldCache = value;
-            if (goldCache < 0) { goldCache = 0; }
-
-            InformationUI.GoldText.text = goldCache.ToString();
-        }
-    }
+    float baseMaxHealth = 100;
+    [SerializeField]
+    float baseAttack = 50.0f;
+    [SerializeField]
+    float baseDefence = 20.0f;
+    [SerializeField]
+    float baseSpeed = 100.0f;
+    [SerializeField]
+    float baseAttackInterval = 100.0f;
 
     [SerializeField]
-    float attack = 50.0f;
-
+    float addMaxHealth = 0;
     [SerializeField]
-    float defence = 20.0f;
-
+    float addAttack = 0;
     [SerializeField]
-    float speedChache = 100.0f;
-    float speed
-    {
-        get { return speedChache; }
-        set
-        {
-            speedChache = value;
-            if (speedChache < 1) { speedChache = 1; }
-        }
-    }
-
+    float addDefence = 0;
     [SerializeField]
-    float attackIntervalCache = 100.0f;
-    float attackInterval
-    {
-        get { return attackIntervalCache; }
-        set
-        {
-            attackInterval = value;
-            if (attackIntervalCache < 1) { attackIntervalCache = 1; }
-
-            BattleUI.PlayerAttackSlider.maxValue = attackIntervalCache;
-        }
-    }
+    float addSpeed = 0;
+    [SerializeField]
+    float addAttackInterval = 0;
 
     public Skill SkillA = null;
     public Skill SkillB = null;
     public Skill SkillC = null;
+
     void Awake()
     {
         Current = this;
@@ -100,16 +56,13 @@ public class PlayerManager : MonoBehaviour
 
     public void Initilize()
     {
-        BattleUI.PlayerHealthSlider.maxValue = maxHealth;
-        BattleUI.PlayerAttackSlider.maxValue = attackInterval;
-
-        health = maxHealth;
-        gold = gold;
+        SetHealth(GetMaxHealth());
+        UpdateAllUI();
     }
 
     public void Reflesh()
     {
-        health = maxHealth;
+        SetHealth(GetMaxHealth());
     }
 
     public string GetName()
@@ -117,14 +70,14 @@ public class PlayerManager : MonoBehaviour
         return playerName;
     }
 
-    public int GetMaxBagSize()
+    public int GetBagSize()
     {
-        return MaxBagSize;
+        return bagSize;
     }
 
     public float GetMaxHealth()
     {
-        return maxHealth;
+        return baseMaxHealth + addMaxHealth + BuildManager.GetBuildStatus(Status.Health);
     }
 
     public float GetHealth()
@@ -134,17 +87,17 @@ public class PlayerManager : MonoBehaviour
 
     public float GetAttack()
     {
-        return attack;
+        return baseAttack + addAttack + BuildManager.GetBuildStatus(Status.Attack);
     }
 
     public float GetDefence()
     {
-        return defence;
+        return baseDefence + addDefence + BuildManager.GetBuildStatus(Status.Defence);
     }
 
     public float GetSpeed()
     {
-        return speed;
+        return baseSpeed + addSpeed + BuildManager.GetBuildStatus(Status.Speed);
     }
 
     public float GetGold()
@@ -154,44 +107,86 @@ public class PlayerManager : MonoBehaviour
 
     public float GetAttackInterval()
     {
-        return attackInterval;
-    }
-
-
-    public void SetMaxHealth(float value)
-    {
-        maxHealth = value;
-        if (health > maxHealth) { SetHealth(maxHealth); }
+        return baseAttackInterval - addAttackInterval - BuildManager.GetBuildStatus(Status.AttackSpeed);
     }
 
     public void SetHealth(float value)
     {
         health = value;
-    }
+        if (GetHealth() > GetMaxHealth()) { SetHealth(GetMaxHealth()); }
 
-    public void SetAttackInterval(float value)
-    {
-        attackInterval = value;
+        UpdateHealthUI();
     }
 
     public void SetGold(float value)
     {
         gold = value;
+        if (gold < 0) { gold = 0; }
+
+        UpdateGoldUI();
     }
 
-    public void Damage(float value)
+    public void SetBaseMaxHealth(float value)
     {
-        health -= value;
+        baseMaxHealth = value;
+        if (GetHealth() > GetMaxHealth()) { SetHealth(GetMaxHealth()); }
+
+        UpdateHealthUI();
     }
 
-    public void Heal(float value)
+    public void SetAddMaxHealth(float value)
     {
-        health += value;
+        addMaxHealth = value;
+        if (GetHealth() > GetMaxHealth()) { SetHealth(GetMaxHealth()); }
+
+        UpdateHealthUI();
     }
 
-    public void AddGold(float value)
+    public void SetBaseAttack(float value)
     {
-        gold += value;
+        baseAttack = value;
+        if (baseAttack < 1) { baseAttack = 1; }
+    }
+
+    public void SetAddAttack(float value)
+    {
+        addAttack = value;
+    }
+
+    public void SetBaseDefence(float value)
+    {
+        baseDefence = value;
+        if (baseDefence < 1) { baseDefence = 1; }
+    }
+
+    public void SetAddDefence(float value)
+    {
+        addDefence = value;
+    }
+    public void SetBaseSpeed(float value)
+    {
+        baseSpeed = value;
+        if (baseSpeed < 1) { baseSpeed = 1; }
+    }
+
+    public void SetAddSpeed(float value)
+    {
+        addSpeed = value;
+    }
+
+    public void SetBaseAttackInterval(float value)
+    {
+        baseAttackInterval = value;
+        if (baseAttackInterval < 1) { baseAttackInterval = 1; }
+
+        UpdateAttackIntervalUI();
+    }
+
+    public void SetAddAttackInterval(float value)
+    {
+        addAttackInterval = value;
+
+        UpdateAttackIntervalUI();
     }
 
     public void UseGold(float value)
@@ -201,6 +196,36 @@ public class PlayerManager : MonoBehaviour
             TextManager.PushLog("ゴールドが足りません!!");
             return;
         }
-        gold -= value;
+
+        SetGold(gold - value);
+    }
+
+    public void AddGold(float value) { SetGold(gold + value); }
+
+    public void Heal(float value) { SetHealth(health + value); }
+
+    public void Damage(float value) { SetHealth(health - value); }
+
+    void UpdateHealthUI()
+    {
+        BattleUI.PlayerHealthSlider.maxValue = GetMaxHealth();
+        BattleUI.PlayerHealthSlider.value = GetHealth();
+    }
+
+    void UpdateGoldUI()
+    {
+        InformationUI.GoldText.text = GetGold().ToString();
+    }
+
+    void UpdateAttackIntervalUI()
+    {
+        BattleUI.PlayerAttackSlider.maxValue = GetAttackInterval();
+    }
+
+    void UpdateAllUI()
+    {
+        UpdateHealthUI();
+        UpdateGoldUI();
+        UpdateAttackIntervalUI();
     }
 }

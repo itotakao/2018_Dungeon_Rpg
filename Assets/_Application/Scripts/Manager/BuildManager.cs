@@ -59,4 +59,23 @@ public class BuildManager : MonoBehaviour
     {
         return Familiar;
     }
+
+    public float GetBuildStatus(Status status)
+    {
+        float total = 0;
+
+        if (GetWeapon())
+            total += GetWeapon().GetStatus(status);
+
+        if (GetArmor())
+            total += GetArmor().GetStatus(status);
+
+        if (GetAccessory())
+            total += GetAccessory().GetStatus(status);
+
+        if(GetFamiliar())
+            total += GetFamiliar().GetStatus(status);
+
+        return total;
+    }
 }

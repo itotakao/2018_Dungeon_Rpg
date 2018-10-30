@@ -57,7 +57,7 @@ public class ItemManager : MonoBehaviour
 
                 // HACK : 手持ち数を超えた処理
                 // TODO : アイテムいっぱい演出を追加する必要あり
-                if (WeaponBox.Count > PlayerManager.GetMaxBagSize()) { return; }
+                if (WeaponBox.Count > PlayerManager.GetBagSize()) { return; }
 
                 WeaponBox.Add(item);
                 UpdateWeaponBox(item);
@@ -162,33 +162,11 @@ public class ItemManager : MonoBehaviour
     }
     public void UseItem(Item item)
     {
-        switch (item.GetStatus())
-        {
-            case Item.Status.HP:
-                PlayerManager.Heal(item.GetValue());
-                break;
-
-            case Item.Status.Attack:
-                break;
-
-            case Item.Status.AttackSpeed:
-                break;
-
-            case Item.Status.Defence:
-                break;
-
-            case Item.Status.Luck:
-                break;
-
-            case Item.Status.Speed:
-                break;
-
-            default:
-#if UNITY_EDITOR
-                Debug.LogError("エラー: 未知なるステータスが設定されています");
-#endif
-                break;
-        }
+        PlayerManager.Heal(item.GetStatus(Status.Health));
+        PlayerManager.SetAddAttack(item.GetStatus(Status.Attack));
+        PlayerManager.SetAddDefence(item.GetStatus(Status.Defence));
+        PlayerManager.SetAddSpeed(item.GetStatus(Status.Speed));
+        PlayerManager.SetAddAttackInterval(item.GetStatus(Status.AttackSpeed));
 
         ItemDictionary[item]--;
         UpdateItemBox(item);

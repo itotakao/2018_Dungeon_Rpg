@@ -2,6 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+
+public enum Status
+{
+    None,
+    Health,
+    Attack,
+    Defence,
+    Speed,
+    AttackSpeed
+}
+
 [Serializable]
 [CreateAssetMenu(fileName = "Item", menuName = "CreateItem")]
 public class Item : ScriptableObject
@@ -14,17 +25,6 @@ public class Item : ScriptableObject
         Accessory,
         Familiar,
         None
-    }
-
-    public enum Status
-    {
-        None,
-        HP,
-        Attack,
-        Defence,
-        Speed,
-        Luck,
-        AttackSpeed
     }
 
     //　アイテムの種類
@@ -43,9 +43,15 @@ public class Item : ScriptableObject
     private float sellGold;
     // アイテムの固有効果
     [SerializeField]
-    private Status status;
+    private float health;
     [SerializeField]
-    private int addValue;
+    private float attack;
+    [SerializeField]
+    private float defence;
+    [SerializeField]
+    private float speed;
+    [SerializeField]
+    private float attackSpeed;
 
     public KindOfItem GetKindOfItem()
     {
@@ -67,12 +73,25 @@ public class Item : ScriptableObject
     {
         return sellGold;
     }
-    public Status GetStatus()
+    public float GetStatus(Status status)
     {
-        return status;
-    }
-    public int GetValue()
-    {
-        return addValue;
+        switch(status){
+            case Status.Health:
+                return health;
+
+            case Status.Attack:
+                return attack;
+
+            case Status.Defence:
+                return defence;
+
+            case Status.Speed:
+                return speed;
+
+            case Status.AttackSpeed:
+                return attackSpeed;
+            default:
+                return 0;
+        }
     }
 }
