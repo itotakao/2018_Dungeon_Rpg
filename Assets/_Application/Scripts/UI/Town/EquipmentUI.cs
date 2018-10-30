@@ -130,7 +130,8 @@ public class EquipmentUI : Base.NormalDialog
         inspectorIconImage.sprite = item.GetIcon();
         inspectorNameText.text = item.GetItemName();
         inspectorInformationText.text = item.GetInformation();
-        inspectorStatusValueText.text = item.GetStatus().ToString() +" +" + item.GetValue().ToString();
+        //TODO : 能力値を5つ表示する形にする
+        //inspectorStatusValueText.text = item.GetStatus().ToString() +" +" + item.GetValue().ToString();
         inspectorSpecialStatusValueText.text = null;// TODO : 付け足す
         inspectorSellGoldText.text = item.GetSellGold().ToString();
     }

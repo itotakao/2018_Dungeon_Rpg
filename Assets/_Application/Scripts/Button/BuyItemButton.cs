@@ -35,7 +35,7 @@ public class BuyItemButton : MonoBehaviour
     {
         if (PlayerManager.GetGold() < needGold) { return; }
 
-        PlayerManager.TakeGold(needGold);
+        PlayerManager.UseGold(needGold);
         ItemManager.AddItem(item);
     }
 }

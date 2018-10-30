@@ -16,5 +16,8 @@ MonoBehaviour:
   itemName: "\u3057\u3083\u3079\u308B"
   information: "\u6398\u308B\u4EE5\u5916\u306E\u4F7F\u3044\u9053\u306F?"
   sellGold: 50
-  status: 2
-  addValue: 10
+  health: 0
+  attack: 20
+  defence: 0
+  speed: 0
+  attackSpeed: 0
